@@ -46,14 +46,15 @@ public class MenuManager {
         }
         g2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
-        g2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+        g2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
         // --- 3. TITLE ---
         g2D.setFont(new Font("Courier New", Font.BOLD, 72));
         g2D.setColor(new Color(245, 235, 220));
         String title = "CHESS";
-        FontMetrics fm = g2D.getFontMetrics();
-        int titleX = (GamePanel.WIDTH - fm.stringWidth(title)) / 2;
+        FontMetrics titleFm = g2D.getFontMetrics();
+        int titleWidth = titleFm.stringWidth(title);
+        int titleX = (GamePanel.WIDTH - titleWidth) / 2;
         int titleY = 165;
 
         g2D.setColor(new Color(20, 12, 8));
@@ -73,7 +74,7 @@ public class MenuManager {
         int infoStartY = 210;
         int infoSpacing = 22;
         for (int li = 0; li < infoLines.length; li++) {
-            fm = g2D.getFontMetrics();
+            FontMetrics fm = g2D.getFontMetrics();
             int lx = (GamePanel.WIDTH - fm.stringWidth(infoLines[li])) / 2;
             g2D.drawString(infoLines[li], lx, infoStartY + li * infoSpacing);
         }
@@ -81,8 +82,19 @@ public class MenuManager {
         // --- 5. FLOATING PAWN ICONS ---
         if (gp.whitePawnIcon != null) {
             float floatOffset = (float)(Math.sin(System.currentTimeMillis() * 0.002) * 8);
-            gp.drawPawnIcon(g2D, gp.whitePawnIcon, titleX - 80, (int)(110 + floatOffset), 60);
-            gp.drawPawnIcon(g2D, gp.blackPawnIcon, titleX + 270, (int)(110 - floatOffset), 60);
+            
+            // Calculating balanced, mathematically perfect symmetrical positions relative to the "CHESS" text bounds
+            int targetHeight = 60;
+            double scale = targetHeight / 70.0;
+            int marginX = (int)(25 * scale); // 21 pixels
+            int w = (int)(50 * scale);       // 42 pixels
+            int gap = 60; // comfortable visual padding between text edges and pawn icons
+            
+            int whitePawnX = titleX - gap - marginX - w;
+            int blackPawnX = titleX + titleWidth + gap - marginX;
+            
+            gp.drawPawnIcon(g2D, gp.whitePawnIcon, whitePawnX, (int)(110 + floatOffset), targetHeight);
+            gp.drawPawnIcon(g2D, gp.blackPawnIcon, blackPawnX, (int)(110 - floatOffset), targetHeight);
         }
 
         // --- 6. MODERN ROUNDED BUTTONS with hover glow ---
@@ -117,7 +129,7 @@ public class MenuManager {
 
             g2D.setFont(new Font("Courier New", Font.BOLD, 16));
             g2D.setColor(new Color(245, 235, 220));
-            fm = g2D.getFontMetrics();
+            FontMetrics fm = g2D.getFontMetrics();
             int textX = btnX + (btnW - fm.stringWidth(labels[i])) / 2;
             int textY = btnY + (btnH + fm.getAscent()) / 2 - 3;
             g2D.drawString(labels[i], textX, textY);

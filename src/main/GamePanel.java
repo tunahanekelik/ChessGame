@@ -1001,7 +1001,7 @@ public class GamePanel extends JPanel implements Runnable{
             g2D.setColor(Color.WHITE);
             String promMsg = "Promote pawn to:";
             int pmW = g2D.getFontMetrics().stringWidth(promMsg);
-            g2D.drawString(promMsg, (WIDTH - pmW) / 2, 320);
+            g2D.drawString(promMsg, (WIDTH - pmW) / 2, 270);
 
             for (Piece piece : promoPieces) {
                 g2D.drawImage(piece.image, piece.getDrawX(), piece.getDrawY(),
