@@ -292,6 +292,7 @@ public class GamePanel extends JPanel implements Runnable{
                     // in case a piece has been captured and removed during the simulation
                     copyPieces(simPieces, pieces);
 
+                    // --- CASTLING---
                     // record the move for the log
                     // doing this BEFORE updatePosition so preCol/preRow still hold the old square
                     if (castlingP != null) { // if its a castling move
