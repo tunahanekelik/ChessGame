@@ -1,0 +1,2319 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Java Desktop Chess - LinkedIn Poster Suite & Comprehensive Showcase</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=VT323&display=swap" rel="stylesheet">
+  <!-- html2canvas Library for High Resolution PNG Downloads -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <!-- Chosen Palette: Chess Dark Mode (Zinc Dark, Gold, Sapphire Blue, Emerald Green) -->
+  <!-- Application Structure Plan: Expanded 5-slide poster carousel showcase, high-res PNG poster exporter for direct image downloads, locale-aware typography fix for English capital I, interactive chess replay simulator widget, deep-dive code snippet viewer, project telemetry stats, and dynamic multi-tone LinkedIn post copywriter tool. -->
+  <!-- Visualization & Content Choices: Canvas-rendered interactive mini chess board replay simulator (NO SVG), html2canvas for raster PNG poster export, structured HTML/Tailwind technical architecture cards, code snippet display boxes, responsive 4:5 poster slides, and dynamic JS state management. -->
+  <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            chess: {
+              bg: '#121214',
+              panel: '#1b1b1e',
+              card: '#242429',
+              lightSquare: '#D2A57D',
+              darkSquare: '#AF7346',
+              accent: '#3b82f6',
+              gold: '#f59e0b',
+              green: '#22c55e',
+              red: '#ef4444',
+              purple: '#a855f7',
+              border: '#323238'
+            }
+          },
+          fontFamily: {
+            pixel: ['"VT323"', 'monospace'],
+            code: ['"Fira Code"', 'monospace'],
+            sans: ['"Inter"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #121214;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #323238;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4b4b54;
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: transparent !important;
+        color: black !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .poster-card {
+        break-inside: avoid;
+        page-break-after: always;
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+      }
+    }
+
+    .pixel-border {
+      box-shadow: 0 0 0 2px #323238, 0 0 0 4px #121214;
+    }
+
+    .glow-blue {
+      box-shadow: 0 0 25px -5px rgba(59, 130, 246, 0.4);
+    }
+  </style>
+</head>
+<body class="bg-chess-bg text-gray-100 font-sans min-h-screen flex flex-col selection:bg-chess-accent selection:text-white">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-chess-panel/90 backdrop-blur-md border-b border-chess-border no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 bg-chess-lightSquare border border-chess-darkSquare rounded flex items-center justify-center text-chess-bg font-pixel text-2xl font-bold shadow">
+          ♟
+        </div>
+        <div>
+          <h1 class="text-sm sm:text-base font-bold tracking-wide text-white flex items-center gap-2">
+            Java Chess <span class="text-xs py-0.5 px-2 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded font-code font-normal">v1.4 Typography Fixed</span>
+          </h1>
+          <p class="text-xs text-gray-400 hidden sm:block">LinkedIn Poster Suite, PNG Downloader & Copywriter Kit</p>
+        </div>
+      </div>
+
+      <!-- Action Controls -->
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Language Switcher (TR / GB EN) -->
+        <div class="bg-chess-card border border-chess-border rounded-lg p-1 flex items-center space-x-1" title="Dil Seçimi / Language Switcher">
+          <button id="btn-tr" onclick="setLanguage('tr')" class="px-3 py-1 rounded text-xs font-semibold transition-all bg-chess-accent text-white shadow">
+            🇹🇷 TR
+          </button>
+          <button id="btn-en" onclick="setLanguage('en')" class="px-3 py-1 rounded text-xs font-semibold text-gray-400 hover:text-white transition-all">
+            🇬🇧 EN
+          </button>
+        </div>
+
+        <!-- GitHub Repo & Download Direct Link -->
+        <a href="https://github.com/tunahanekelik/ChessGame" target="_blank" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 border border-gray-600 hover:border-blue-400 text-xs font-semibold text-white transition shadow-md">
+          <i class="fa-brands fa-github text-sm text-white"></i>
+          <span class="hidden sm:inline" data-lang-tr="GitHub Repo & İndir" data-lang-en="GitHub Repo & Download">GitHub Repo & İndir</span>
+          <span class="sm:hidden">GitHub</span>
+        </a>
+
+        <!-- Jump to Replay Simulator -->
+        <a href="#simulator-section" class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-chess-card hover:bg-chess-border border border-chess-border text-xs font-medium text-amber-400 transition">
+          <i class="fa-solid fa-gamepad"></i>
+          <span data-lang-tr="Oynanış & Simülatör" data-lang-en="Gameplay & Simulator">Oynanış & Simülatör</span>
+        </a>
+
+        <!-- Jump to Code Inspector -->
+        <a href="#code-inspector-section" class="hidden md:flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-chess-card hover:bg-chess-border border border-chess-border text-xs font-medium text-blue-400 transition">
+          <i class="fa-solid fa-code"></i>
+          <span data-lang-tr="Kod İnceleyici" data-lang-en="Code Inspector">Kod İnceleyici</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+    <!-- Header Intro Banner -->
+    <div class="bg-gradient-to-r from-chess-panel via-chess-card to-chess-panel border border-chess-border rounded-2xl p-6 md:p-8 relative overflow-hidden shadow-xl no-print">
+      <div class="absolute right-0 top-0 translate-x-12 -translate-y-12 w-64 h-64 bg-chess-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-chess-gold/10 border border-chess-gold/30 text-chess-gold text-xs font-medium">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span data-lang-tr="CEN302 Yazılım Projesi Geliştirme • Bilgisayar Mühendisliği" data-lang-en="CEN302 Software Project Development • Computer Engineering">CEN302 Yazılım Projesi Geliştirme • Bilgisayar Mühendisliği</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight" data-lang-tr="Java Masaüstü Satranç Projesi Vitrini" data-lang-en="Java Desktop Chess Project Showcase">
+            Java Masaüstü Satranç Projesi Vitrini
+          </h2>
+          <p class="text-gray-300 text-sm max-w-3xl leading-relaxed" data-lang-tr="Java Swing ile geliştirilen nesne yönelimli satranç motorunun teknik detaylarını, afişlerini, interaktif simülatörünü ve mimarisini aşağıdan inceleyebilirsiniz." data-lang-en="Explore the technical architecture, project posters, interactive simulator, and source code of the Java Swing chess engine below.">
+            Java Swing ile geliştirilen nesne yönelimli satranç motorunun teknik detaylarını, afişlerini, interaktif simülatörünü ve mimarisini aşağıdan inceleyebilirsiniz.
+          </p>
+        </div>
+
+        <!-- Quick navigation chips -->
+        <div class="flex flex-wrap md:flex-col gap-2 shrink-0">
+          <a href="#poster-1" class="px-3 py-1.5 rounded-lg bg-chess-bg/80 border border-chess-border text-xs text-gray-300 hover:text-white hover:border-chess-accent transition flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold">1</span>
+            <span data-lang-tr="Kapak & Genel Bakış" data-lang-en="Cover & Hero">Kapak & Genel Bakış</span>
+          </a>
+          <a href="#poster-2" class="px-3 py-1.5 rounded-lg bg-chess-bg/80 border border-chess-border text-xs text-gray-300 hover:text-white hover:border-chess-green transition flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center font-bold">2</span>
+            <span data-lang-tr="Oynanış & Kural Motoru" data-lang-en="Gameplay & Rules">Oynanış & Kural Motoru</span>
+          </a>
+          <a href="#poster-3" class="px-3 py-1.5 rounded-lg bg-chess-bg/80 border border-chess-border text-xs text-gray-300 hover:text-white hover:border-chess-gold transition flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">3</span>
+            <span data-lang-tr="Modüler OOP Mimarisi" data-lang-en="Modular OOP Architecture">Modüler OOP Mimarisi</span>
+          </a>
+          <a href="#poster-4" class="px-3 py-1.5 rounded-lg bg-chess-bg/80 border border-chess-border text-xs text-gray-300 hover:text-white hover:border-purple-500 transition flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">4</span>
+            <span data-lang-tr="SQLite & Replay Motoru" data-lang-en="SQLite & Replay Engine">SQLite & Replay Motoru</span>
+          </a>
+          <a href="#poster-5" class="px-3 py-1.5 rounded-lg bg-chess-bg/80 border border-chess-border text-xs text-gray-300 hover:text-white hover:border-rose-500 transition flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">5</span>
+            <span data-lang-tr="UI/UX, Temalar & 60 FPS Loop" data-lang-en="UI/UX, Themes & Render Loop">UI/UX, Temalar & 60 FPS Loop</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- METRICS DASHBOARD -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 no-print">
+      <div class="bg-chess-card border border-chess-border p-4 rounded-xl text-center space-y-1">
+        <div class="text-xs text-gray-400 font-code" data-lang-tr="OOP KATMANLARI" data-lang-en="OOP LAYERS">OOP KATMANLARI</div>
+        <div class="text-xl font-bold text-chess-accent font-code">4 Main Modules</div>
+        <div class="text-[10px] text-gray-400" data-lang-tr="Separation of Concerns" data-lang-en="Separation of Concerns">Separation of Concerns</div>
+      </div>
+      <div class="bg-chess-card border border-chess-border p-4 rounded-xl text-center space-y-1">
+        <div class="text-xs text-gray-400 font-code" data-lang-tr="ŞAH MAT KONTROLÜ" data-lang-en="CHECKMATE MATRIX">ŞAH MAT KONTROLÜ</div>
+        <div class="text-xl font-bold text-chess-green font-code">3-Tier Safety</div>
+        <div class="text-[10px] text-gray-400" data-lang-tr="Escape, Capture, Block" data-lang-en="Escape, Capture, Block">Escape, Capture, Block</div>
+      </div>
+      <div class="bg-chess-card border border-chess-border p-4 rounded-xl text-center space-y-1">
+        <div class="text-xs text-gray-400 font-code" data-lang-tr="HEDEF KARE HIZI" data-lang-en="TARGET FRAME RATE">HEDEF KARE HIZI</div>
+        <div class="text-xl font-bold text-chess-gold font-code">60 FPS Loop</div>
+        <div class="text-[10px] text-gray-400" data-lang-tr="Double Buffered Swing" data-lang-en="Double Buffered Swing">Double Buffered Swing</div>
+      </div>
+      <div class="bg-chess-card border border-chess-border p-4 rounded-xl text-center space-y-1">
+        <div class="text-xs text-gray-400 font-code" data-lang-tr="VERİTABANI ALTYAPISI" data-lang-en="DATABASE LAYER">VERİTABANI ALTYAPISI</div>
+        <div class="text-xl font-bold text-purple-400 font-code">SQLite 3</div>
+        <div class="text-[10px] text-gray-400" data-lang-tr="Cascade Foreign Keys" data-lang-en="Cascade Foreign Keys">Cascade Foreign Keys</div>
+      </div>
+      <div class="bg-chess-card border border-chess-border p-4 rounded-xl text-center space-y-1">
+        <div class="text-xs text-gray-400 font-code" data-lang-tr="REPLAY ANİMASYONU" data-lang-en="REPLAY INTERPOLATION">REPLAY ANİMASYONU</div>
+        <div class="text-xl font-bold text-rose-400 font-code">400 ms Step</div>
+        <div class="text-[10px] text-gray-400" data-lang-tr="Smooth Transition" data-lang-en="Smooth Transition">Smooth Transition</div>
+      </div>
+      <div class="bg-chess-card border border-chess-border p-4 rounded-xl text-center space-y-1">
+        <div class="text-xs text-gray-400 font-code" data-lang-tr="TAHTA TEMALARI" data-lang-en="BOARD THEMES">TAHTA TEMALARI</div>
+        <div class="text-xl font-bold text-cyan-400 font-code">5 Custom Palettes</div>
+        <div class="text-[10px] text-gray-400" data-lang-tr="Classic to Midnight" data-lang-en="Classic to Midnight">Classic to Midnight</div>
+      </div>
+    </div>
+
+    <!-- POSTER SECTION (5 CARDS) -->
+    <div class="space-y-16">
+
+      <!-- ==========================================
+           POSTER 1: COVER & HERO (KAPAK AFİŞİ)
+           ========================================== -->
+      <section id="poster-1" class="poster-card max-w-4xl mx-auto bg-chess-panel border border-chess-border rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:border-blue-500/50">
+        
+        <!-- Poster Header Bar -->
+        <div class="bg-chess-card/90 px-6 py-4 border-b border-chess-border flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center space-x-3">
+            <span class="px-2.5 py-1 rounded bg-blue-500/20 border border-blue-500/40 text-blue-400 font-code text-xs font-bold">SLIDE 01 / 05</span>
+            <span class="text-xs tracking-wider text-gray-400 font-semibold" data-lang-tr="ANA VİTRİN & PROJE KAPAK AFİŞİ" data-lang-en="MAIN HERO & PROJECT COVER POSTER">ANA VİTRİN & PROJE KAPAK AFİŞİ</span>
+          </div>
+          <span class="text-xs font-code text-blue-400 font-semibold">Hero Slide</span>
+        </div>
+
+        <!-- Poster Body Content (Target for html2canvas) -->
+        <div id="poster-1-content" class="p-6 sm:p-10 space-y-8 bg-gradient-to-b from-chess-panel via-[#151518] to-chess-panel">
+          
+          <!-- Top Branding Badge -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-chess-border/60 pb-6">
+            <div class="flex items-center space-x-3">
+              <div class="w-12 h-12 bg-[#2a2420] border-2 border-chess-lightSquare rounded-lg flex items-center justify-center font-pixel text-4xl text-chess-lightSquare shadow-inner">
+                ♟
+              </div>
+              <div>
+                <h3 class="font-pixel text-3xl sm:text-4xl text-white tracking-widest leading-none">JAVA CHESS ENGINE</h3>
+                <p class="text-xs font-code text-chess-gold tracking-wider">CEN302 Software Project Development • Computer Engineering</p>
+              </div>
+            </div>
+            <div class="text-left sm:text-right font-code text-xs text-gray-400">
+              <div class="text-white font-semibold">Tunahan Ferramuz Ekelik</div>
+              <div class="text-gray-400">ID: 22040102034</div>
+            </div>
+          </div>
+
+          <!-- Main Hero Catchphrase -->
+          <div class="text-center space-y-3 py-4">
+            <div class="inline-block px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 font-code text-xs font-bold tracking-widest">
+              Desktop OOP Architecture & SQLite Engine
+            </div>
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight" data-lang-tr="Java ile Modern OOP Mimarisi & Dinamik Satranç Motoru" data-lang-en="Object-Oriented Architecture & Dynamic Chess Engine in Java">
+              Java ile Modern OOP Mimarisi & Dinamik Satranç Motoru
+            </h2>
+            <p class="text-sm sm:text-base text-gray-300 max-w-2xl mx-auto leading-relaxed" data-lang-tr="RyisNow temel öğretisinden ilham alınarak, monolitik yapıdan modüler, genişletilebilir ve veritabanı destekli kapsamlı bir masaüstü satranç deneyimine dönüştürüldü." data-lang-en="Inspired by RyisNow's foundational architecture, scaled up from a monolithic structure into a modular, extensible, and persistent desktop chess experience.">
+              RyisNow temel öğretisinden ilham alınarak, monolitik yapıdan modüler, genişletilebilir ve veritabanı destekli kapsamlı bir masaüstü satranç deneyimine dönüştürüldü.
+            </p>
+          </div>
+
+          <!-- Core Feature Grid Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-chess-card border border-chess-border rounded-xl p-4 space-y-2 relative overflow-hidden group hover:border-blue-500/40 transition">
+              <div class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center text-sm mb-2">
+                <i class="fa-solid fa-sitemap"></i>
+              </div>
+              <h4 class="font-bold text-sm text-white" data-lang-tr="Modüler Delegasyon" data-lang-en="Modular Delegation">Modüler Delegasyon</h4>
+              <p class="text-xs text-gray-400 leading-relaxed" data-lang-tr="ChessLogic, MenuManager, ReplaySystem ve DatabaseManager ile kesin sorumluluk ayrımı." data-lang-en="Strict separation of concerns via ChessLogic, MenuManager, ReplaySystem and DatabaseManager.">ChessLogic, MenuManager, ReplaySystem ve DatabaseManager ile kesin sorumluluk ayrımı.</p>
+            </div>
+
+            <div class="bg-chess-card border border-chess-border rounded-xl p-4 space-y-2 relative overflow-hidden group hover:border-chess-gold/40 transition">
+              <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm mb-2">
+                <i class="fa-solid fa-database"></i>
+              </div>
+              <h4 class="font-bold text-sm text-white" data-lang-tr="SQLite & Replay" data-lang-en="SQLite & Replay">SQLite & Replay</h4>
+              <p class="text-xs text-gray-400 leading-relaxed" data-lang-tr="Kalıcı oyun kaydı, cebirsel notasyon geçmişi ve 400ms interpolasyonlu animasyonlu tekrar." data-lang-en="Persistent match records, algebraic notation logs, and 400ms smooth interpolation replay.">Kalıcı oyun kaydı, cebirsel notasyon geçmişi ve 400ms interpolasyonlu animasyonlu tekrar.</p>
+            </div>
+
+            <div class="bg-chess-card border border-chess-border rounded-xl p-4 space-y-2 relative overflow-hidden group hover:border-chess-green/40 transition">
+              <div class="w-8 h-8 rounded-lg bg-green-500/10 text-green-400 flex items-center justify-center text-sm mb-2">
+                <i class="fa-solid fa-palette"></i>
+              </div>
+              <h4 class="font-bold text-sm text-white" data-lang-tr="5 Dinamik Tema" data-lang-en="5 Dynamic Themes">5 Dinamik Tema</h4>
+              <p class="text-xs text-gray-400 leading-relaxed" data-lang-tr="Classic, Ocean, Forest, Desert, Midnight renk paletleri ve özelleştirilebilir piksel estetiği." data-lang-en="Classic, Ocean, Forest, Desert, Midnight board palettes with custom retro pixel aesthetics.">Classic, Ocean, Forest, Desert, Midnight renk paletleri ve özelleştirilebilir piksel estetiği.</p>
+            </div>
+          </div>
+
+          <!-- Bottom Tech Stack Badges -->
+          <div class="border-t border-chess-border/60 pt-4 flex flex-wrap items-center justify-between gap-3 text-xs font-code text-gray-400">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2.5 py-1 rounded bg-chess-card border border-chess-border text-gray-300">Java JDK</span>
+              <span class="px-2.5 py-1 rounded bg-chess-card border border-chess-border text-gray-300">Swing & AWT</span>
+              <span class="px-2.5 py-1 rounded bg-chess-card border border-chess-border text-gray-300">SQLite (chess.db)</span>
+              <span class="px-2.5 py-1 rounded bg-chess-card border border-chess-border text-gray-300">60 FPS Game Loop</span>
+            </div>
+            <div class="flex items-center gap-2 text-chess-gold font-medium">
+              <i class="fa-solid fa-code-fork"></i>
+              <span>Extended from RyisNow Base</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ==========================================
+           POSTER 2: GAMEPLAY & RULES ENGINE (OYNAYIŞ)
+           ========================================== -->
+      <section id="poster-2" class="poster-card max-w-4xl mx-auto bg-chess-panel border border-chess-border rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:border-green-500/50">
+        
+        <!-- Poster Header Bar -->
+        <div class="bg-chess-card/90 px-6 py-4 border-b border-chess-border flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center space-x-3">
+            <span class="px-2.5 py-1 rounded bg-green-500/20 border border-green-500/40 text-green-400 font-code text-xs font-bold">SLIDE 02 / 05</span>
+            <span class="text-xs tracking-wider text-gray-400 font-semibold" data-lang-tr="OYNAYIŞ, FIDE KURALLARI & ŞAH MAT MOTORU" data-lang-en="GAMEPLAY, FIDE RULES & CHECKMATE ENGINE">OYNAYIŞ, FIDE KURALLARI & ŞAH MAT MOTORU</span>
+          </div>
+          <span class="text-xs font-code text-green-400 font-semibold">Rules Engine</span>
+        </div>
+
+        <!-- Poster Body Content -->
+        <div id="poster-2-content" class="p-6 sm:p-10 space-y-8 bg-gradient-to-b from-chess-panel via-[#131714] to-chess-panel">
+          
+          <!-- Title & Subtitle -->
+          <div class="space-y-2">
+            <div class="inline-block px-3 py-1 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 font-code text-xs font-bold tracking-wider">
+              Rule Engine & Mechanics
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" data-lang-tr="FIDE Standartlarında Kural Bütünlüğü & Anlık Doğrulama" data-lang-en="Full FIDE Standard Compliance & Real-Time Validation">
+              FIDE Standartlarında Kural Bütünlüğü & Anlık Doğrulama
+            </h3>
+            <p class="text-gray-300 text-xs sm:text-sm max-w-2xl leading-relaxed" data-lang-tr="Sürükle-bırak etkileşimi, dinamik yasal hamle vurguları ve gerçek zamanlı cebirsel notasyon akışı." data-lang-en="Mouse drag-and-drop interaction, dynamic legal move highlights, and real-time algebraic notation stream.">
+              Sürükle-bırak etkileşimi, dinamik yasal hamle vurguları ve gerçek zamanlı cebirsel notasyon akışı.
+            </p>
+          </div>
+
+          <!-- Feature Columns (FIDE Rules + Checkmate Logic) -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Left Card: Mechanics -->
+            <div class="bg-chess-card border border-chess-border rounded-xl p-5 space-y-4">
+              <div class="flex items-center gap-2 text-green-400 font-bold text-sm border-b border-chess-border/60 pb-2">
+                <i class="fa-solid fa-chess-knight"></i>
+                <span data-lang-tr="Tam Entegre Özel Hamleler" data-lang-en="Fully Integrated Special Moves">Tam Entegre Özel Hamleler</span>
+              </div>
+              
+              <ul class="space-y-3 text-xs text-gray-300">
+                <li class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded bg-green-500/20 text-green-400 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">✓</span>
+                  <div>
+                    <strong class="text-white" data-lang-tr="Geçerken Alma (En Passant):" data-lang-en="En Passant:">Geçerken Alma (En Passant):</strong>
+                    <span data-lang-tr=" İki kare çıkan rakip piyonu anında yakalama mekaniği." data-lang-en=" Immediate adjacent capture upon opponent 2-square pawn jump."> İki kare çıkan rakip piyonu anında yakalama mekaniği.</span>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded bg-green-500/20 text-green-400 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">✓</span>
+                  <div>
+                    <strong class="text-white" data-lang-tr="Piyon Terfisi (Promotion UI):" data-lang-en="Pawn Promotion UI:">Piyon Terfisi (Promotion UI):</strong>
+                    <span data-lang-tr=" Son yataya varan piyon için sağ panelde anlık Vezir/Kale/Fil/At seçim arayüzü." data-lang-en=" In-panel interactive modal for Queen, Rook, Bishop, or Knight selection."> Son yataya varan piyon için sağ panelde anlık Vezir/Kale/Fil/At seçim arayüzü.</span>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded bg-green-500/20 text-green-400 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">✓</span>
+                  <div>
+                    <strong class="text-white" data-lang-tr="Rok (Castling):" data-lang-en="Castling:">Rok (Castling):</strong>
+                    <span data-lang-tr=" Şah ve Vezir kanadı için tehdit altında olmama ve yol boşluğu kontrolü." data-lang-en=" King-side and Queen-side support with threat path validation."> Şah ve Vezir kanadı için tehdit altında olmama ve yol boşluğu kontrolü.</span>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded bg-green-500/20 text-green-400 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">✓</span>
+                  <div>
+                    <strong class="text-white" data-lang-tr="Canlı Notasyon Paneli:" data-lang-en="Live Notation Panel:">Canlı Notasyon Paneli:</strong>
+                    <span data-lang-tr=" Yapılan her hamlenin standart cebirsel notasyonla (e4, Nf3, O-O, cxd5) canlı yazılması." data-lang-en=" Standard algebraic notation log (e4, Nf3, O-O, cxd5) streamed to HUD."> Yapılan her hamlenin standart cebirsel notasyonla (e4, Nf3, O-O, cxd5) canlı yazılması.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Right Card: 3-Tier Checkmate Matrix -->
+            <div class="bg-chess-card border border-chess-border rounded-xl p-5 space-y-4">
+              <div class="flex items-center gap-2 text-red-400 font-bold text-sm border-b border-chess-border/60 pb-2">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span data-lang-tr="3 Kademeli Şah Mat / Pat Tespit Matrisi" data-lang-en="3-Tier Checkmate & Stalemate Matrix">3 Kademeli Şah Mat / Pat Tespit Matrisi</span>
+              </div>
+
+              <p class="text-xs text-gray-300 leading-relaxed" data-lang-tr="Şah tehdit altına girdiğinde (isKingInCheck), ChessLogic sınıfı sanal tahta (simPieces) üzerinde 3 kademeli doğrulama yürütür:" data-lang-en="When the King is threatened (isKingInCheck), ChessLogic runs a 3-tier deep evaluation over simulated state (simPieces):">
+                Şah tehdit altına girdiğinde (isKingInCheck), ChessLogic sınıfı sanal tahta (simPieces) üzerinde 3 kademeli doğrulama yürütür:
+              </p>
+
+              <div class="space-y-2">
+                <div class="p-2.5 rounded-lg bg-chess-bg border border-chess-border/70 flex items-center gap-3">
+                  <span class="w-6 h-6 rounded bg-blue-500/20 text-blue-400 font-code font-bold text-xs flex items-center justify-center">1</span>
+                  <div class="text-xs">
+                    <span class="text-white font-semibold" data-lang-tr="Kaçış Analizi (Escape):" data-lang-en="Escape Analysis:">Kaçış Analizi (Escape):</span>
+                    <span class="text-gray-400" data-lang-tr=" Şah'ın gidebileceği güvenli bir kare var mı?" data-lang-en=" Can King move to a safe, unattacked square?"> Şah'ın gidebileceği güvenli bir kare var mı?</span>
+                  </div>
+                </div>
+
+                <div class="p-2.5 rounded-lg bg-chess-bg border border-chess-border/70 flex items-center gap-3">
+                  <span class="w-6 h-6 rounded bg-amber-500/20 text-amber-400 font-code font-bold text-xs flex items-center justify-center">2</span>
+                  <div class="text-xs">
+                    <span class="text-white font-semibold" data-lang-tr="Tehdidi Eleme (Capture):" data-lang-en="Threat Capture:">Tehdidi Eleme (Capture):</span>
+                    <span class="text-gray-400" data-lang-tr=" Saldıran taş başka bir taşla alınabilir mi?" data-lang-en=" Can the attacking piece be captured safely?"> Saldıran taş başka bir taşla alınabilir mi?</span>
+                  </div>
+                </div>
+
+                <div class="p-2.5 rounded-lg bg-chess-bg border border-chess-border/70 flex items-center gap-3">
+                  <span class="w-6 h-6 rounded bg-purple-500/20 text-purple-400 font-code font-bold text-xs flex items-center justify-center">3</span>
+                  <div class="text-xs">
+                    <span class="text-white font-semibold" data-lang-tr="Yol Blokajı (Block):" data-lang-en="Path Interception:">Yol Blokajı (Block):</span>
+                    <span class="text-gray-400" data-lang-tr=" Tehdit hattı araya bir taş sokularak kesilebilir mi?" data-lang-en=" Can a piece intercept the attack ray?"> Tehdit hattı araya bir taş sokularak kesilebilir mi?</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-[11px] font-code p-2 bg-red-500/10 border border-red-500/20 text-red-300 rounded text-center">
+                <span data-lang-tr="3 olasılık da tükenmişse ➔ ŞAH MAT | Tehditsiz hamlesizlik ➔ PAT" data-lang-en="All 3 options exhausted ➔ CHECKMATE | No legal move & no check ➔ STALEMATE">3 olasılık da tükenmişse ➔ ŞAH MAT | Tehditsiz hamlesizlik ➔ PAT</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Visual Ribbon -->
+          <div class="bg-chess-card/50 border border-chess-border p-4 rounded-xl flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex items-center space-x-2 text-gray-300">
+              <span class="w-3 h-3 rounded-full bg-chess-green"></span>
+              <span data-lang-tr="Yeşil Vurgu: Yasal Hamle Hedefi" data-lang-en="Green Highlight: Valid Target Square">Yeşil Vurgu: Yasal Hamle Hedefi</span>
+            </div>
+            <div class="flex items-center space-x-2 text-gray-300">
+              <span class="w-3 h-3 rounded-full bg-chess-red"></span>
+              <span data-lang-tr="Kırmızı Panel Uyarısı: Şah Tehdidi (Check)" data-lang-en="Red HUD Warning: King in Check">Kırmızı Panel Uyarısı: Şah Tehdidi (Check)</span>
+            </div>
+            <div class="flex items-center space-x-2 text-gray-300">
+              <span class="w-3 h-3 rounded-full bg-gray-500"></span>
+              <span data-lang-tr="Gri Geri Sarma: Geçersiz Hamle (Snap Back)" data-lang-en="Gray Rollback: Illegal Move Snap-Back">Gri Geri Sarma: Geçersiz Hamle (Snap Back)</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ==========================================
+           POSTER 3: TECHNICAL ARCHITECTURE & OOP (MİMARİ)
+           ========================================== -->
+      <section id="poster-3" class="poster-card max-w-4xl mx-auto bg-chess-panel border border-chess-border rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:border-amber-500/50">
+        
+        <!-- Poster Header Bar -->
+        <div class="bg-chess-card/90 px-6 py-4 border-b border-chess-border flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center space-x-3">
+            <span class="px-2.5 py-1 rounded bg-amber-500/20 border border-amber-500/40 text-amber-400 font-code text-xs font-bold">SLIDE 03 / 05</span>
+            <span class="text-xs tracking-wider text-gray-400 font-semibold" data-lang-tr="TEKNİK MİMARİ, OOP & DESIGN PATTERNS" data-lang-en="TECHNICAL ARCHITECTURE, OOP & PATTERNS">TEKNİK MİMARİ, OOP & DESIGN PATTERNS</span>
+          </div>
+          <span class="text-xs font-code text-amber-400 font-semibold">Architecture</span>
+        </div>
+
+        <!-- Poster Body Content -->
+        <div id="poster-3-content" class="p-6 sm:p-10 space-y-8 bg-gradient-to-b from-chess-panel via-[#191714] to-chess-panel">
+          
+          <!-- Header -->
+          <div class="space-y-2">
+            <div class="inline-block px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 font-code text-xs font-bold tracking-wider">
+              System Architecture & Separation of Concerns
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" data-lang-tr="Sorumlulukların Ayrıştırılması & Nesne Yönelimli Tasarım" data-lang-en="Separation of Concerns & Object-Oriented Design">
+              Sorumlulukların Ayrıştırılması & Nesne Yönelimli Tasarım
+            </h3>
+            <p class="text-gray-300 text-xs sm:text-sm max-w-2xl leading-relaxed" data-lang-tr="Monolitik GUI karmaşasını önleyen modüler katmanlar, polimorfik taş sınıfları ve gölge simülasyon mekanizması." data-lang-en="Decoupled modular design preventing UI/logic entanglement, polymorphic piece class hierarchies, and shadow state simulation.">
+              Monolitik GUI karmaşasını önleyen modüler katmanlar, polimorfik taş sınıfları ve gölge simülasyon mekanizması.
+            </p>
+          </div>
+
+          <!-- Architecture 3-Column Diagram -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+            <!-- Box 1: OOP & Polymorphism -->
+            <div class="bg-chess-card border border-chess-border rounded-xl p-4 space-y-3">
+              <div class="flex items-center gap-2 text-blue-400 font-bold text-xs">
+                <i class="fa-solid fa-shapes"></i>
+                <span data-lang-tr="Polimorfik Domain Modeli" data-lang-en="Polymorphic Domain Model">Polimorfik Domain Modeli</span>
+              </div>
+              <div class="font-code text-[11px] bg-chess-bg p-2.5 rounded border border-chess-border text-gray-300 space-y-1">
+                <div class="text-purple-400">abstract class Piece {</div>
+                <div class="pl-3 text-gray-400">// Base coordinates & sprite</div>
+                <div class="pl-3 text-blue-300 font-semibold">abstract boolean canMove(...)</div>
+                <div class="text-purple-400">}</div>
+              </div>
+              <p class="text-[11px] text-gray-400 leading-relaxed" data-lang-tr="Tüm taşlar ortak sınıftan türer. Dynamic binding ile her taş kendi matematiksel hareket sınırlarını doğrular." data-lang-en="All pieces extend Piece base class. Dynamic binding validates mathematical geometry per piece type.">
+                Tüm taşlar ortak sınıftan türer. Dynamic binding ile her taş kendi matematiksel hareket sınırlarını doğrular.
+              </p>
+            </div>
+
+            <!-- Box 2: Speculative Execution -->
+            <div class="bg-chess-card border border-chess-border rounded-xl p-4 space-y-3">
+              <div class="flex items-center gap-2 text-amber-400 font-bold text-xs">
+                <i class="fa-solid fa-code-compare"></i>
+                <span data-lang-tr="Çift Liste & Simülasyon" data-lang-en="Dual-List Speculative State">Çift Liste & Simülasyon</span>
+              </div>
+              <div class="font-code text-[11px] bg-chess-bg p-2.5 rounded border border-chess-border text-gray-300 space-y-1">
+                <div class="text-emerald-400">ArrayList&lt;Piece&gt; pieces;</div>
+                <div class="text-amber-300">ArrayList&lt;Piece&gt; simPieces;</div>
+                <div class="text-gray-400 text-[10px] mt-1">// Safe check ➔ commit</div>
+              </div>
+              <p class="text-[11px] text-gray-400 leading-relaxed" data-lang-tr="Sürüklenen taş önce gölge listede (simPieces) simüle edilir. Kendi şahını tehlikeye atıyorsa rollback yapılır." data-lang-en="Move evaluated speculatively in shadow list. Rolled back (resetPosition) if king is left in danger.">
+                Sürüklenen taş önce gölge listede (simPieces) simüle edilir. Kendi şahını tehlikeye atıyorsa rollback yapılır.
+              </p>
+            </div>
+
+            <!-- Box 3: Menu & State Delegator -->
+            <div class="bg-chess-card border border-chess-border rounded-xl p-4 space-y-3">
+              <div class="flex items-center gap-2 text-green-400 font-bold text-xs">
+                <i class="fa-solid fa-bars-staggered"></i>
+                <span data-lang-tr="MenuManager (State Pattern)" data-lang-en="MenuManager State Machine">MenuManager (State Pattern)</span>
+              </div>
+              <div class="font-code text-[11px] bg-chess-bg p-2.5 rounded border border-chess-border text-gray-300 space-y-1">
+                <div class="text-sky-400">enum GameState {</div>
+                <div class="pl-3 text-gray-300">MENU, GAME, PAST_GAMES</div>
+                <div class="text-sky-400">}</div>
+              </div>
+              <p class="text-[11px] text-gray-400 leading-relaxed" data-lang-tr="Ana menü, aktif oyun ve geçmiş maç inceleme ekranları arasındaki geçişler MenuManager tarafından yönetilir." data-lang-en="Transitions between main menu, active gameplay, and match database history managed via MenuManager.">
+                Ana menü, aktif oyun ve geçmiş maç inceleme ekranları arasındaki geçişler MenuManager tarafından yönetilir.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Detailed OOP Layer Map -->
+          <div class="bg-chess-card border border-chess-border rounded-xl p-5 space-y-4">
+            <div class="text-xs font-bold text-white font-code flex items-center justify-between border-b border-chess-border/60 pb-2">
+              <span data-lang-tr="YAZILIM KATMANLARI VE DELEGASYON ŞEMASI" data-lang-en="SOFTWARE LAYERS & DELEGATION MAP">YAZILIM KATMANLARI VE DELEGASYON ŞEMASI</span>
+              <span class="text-amber-400">MVC Architecture</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+              <div class="p-3 bg-chess-bg rounded-lg border border-chess-border space-y-1">
+                <div class="text-blue-400 font-bold">1. GamePanel (View)</div>
+                <div class="text-gray-400 text-[11px]">Swing JPanel, Paint Component, Mouse Input Listeners</div>
+              </div>
+              <div class="p-3 bg-chess-bg rounded-lg border border-chess-border space-y-1">
+                <div class="text-green-400 font-bold">2. ChessLogic (Controller)</div>
+                <div class="text-gray-400 text-[11px]">FIDE validation, Checkmate matrix, Turn switching</div>
+              </div>
+              <div class="p-3 bg-chess-bg rounded-lg border border-chess-border space-y-1">
+                <div class="text-amber-400 font-bold">3. ReplaySystem</div>
+                <div class="text-gray-400 text-[11px]">Step-by-step playback, PGN parser, Interpolation timer</div>
+              </div>
+              <div class="p-3 bg-chess-bg rounded-lg border border-chess-border space-y-1">
+                <div class="text-purple-400 font-bold">4. DatabaseManager</div>
+                <div class="text-gray-400 text-[11px]">JDBC SQLite connection, Transactions, Foreign Keys</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Footer Info -->
+          <div class="border-t border-chess-border/60 pt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-gray-400">
+            <span data-lang-tr="Tasarım Deseni: Model-View-Controller (MVC) + Continuous Loop" data-lang-en="Design Pattern: Model-View-Controller (MVC) + Continuous Loop">Tasarım Deseni: Model-View-Controller (MVC) + Continuous Loop</span>
+            <span class="text-gray-300 font-code font-semibold">@Tunahan Ferramuz Ekelik</span>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ==========================================
+           POSTER 4: SQLITE PERSISTENCE & REPLAY ENGINE
+           ========================================== -->
+      <section id="poster-4" class="poster-card max-w-4xl mx-auto bg-chess-panel border border-chess-border rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:border-purple-500/50">
+        
+        <!-- Poster Header Bar -->
+        <div class="bg-chess-card/90 px-6 py-4 border-b border-chess-border flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center space-x-3">
+            <span class="px-2.5 py-1 rounded bg-purple-500/20 border border-purple-500/40 text-purple-400 font-code text-xs font-bold">SLIDE 04 / 05</span>
+            <span class="text-xs tracking-wider text-gray-400 font-semibold" data-lang-tr="VERİTABANI VERİ KALICILIĞI & ANİMASYONLU REPLAY" data-lang-en="DATABASE PERSISTENCE & ANIMATED REPLAY ENGINE">VERİTABANI VERİ KALICILIĞI & ANİMASYONLU REPLAY</span>
+          </div>
+          <span class="text-xs font-code text-purple-400 font-semibold">Persistence</span>
+        </div>
+
+        <!-- Poster Body Content -->
+        <div id="poster-4-content" class="p-6 sm:p-10 space-y-8 bg-gradient-to-b from-chess-panel via-[#18141d] to-chess-panel">
+          
+          <!-- Header -->
+          <div class="space-y-2">
+            <div class="inline-block px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 font-code text-xs font-bold tracking-wider">
+              Relational Storage & Dynamic Playback
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" data-lang-tr="SQLite İlişkisel Veritabanı & Smooth Replay Motoru" data-lang-en="Relational SQLite Engine & Interpolated Replay System">
+              SQLite İlişkisel Veritabanı & Smooth Replay Motoru
+            </h3>
+            <p class="text-gray-300 text-xs sm:text-sm max-w-2xl leading-relaxed" data-lang-tr="Her maç ve hamle SQLite veritabanına kaydedilir. Past Games ekranından geçmiş oyunlar adım adım veya 400ms akıcı animasyonla izlenebilir." data-lang-en="Matches and move logs persisted dynamically into SQLite. Playback matches with step navigation or 400ms smooth square interpolation.">
+              Her maç ve hamle SQLite veritabanına kaydedilir. Past Games ekranından geçmiş oyunlar adım adım veya 400ms akıcı animasyonla izlenebilir.
+            </p>
+          </div>
+
+          <!-- SQLite Schema Representation -->
+          <div class="bg-chess-card border border-chess-border rounded-xl p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-chess-border/60 pb-2">
+              <div class="flex items-center gap-2 text-chess-gold font-bold text-xs font-code">
+                <i class="fa-solid fa-database"></i>
+                <span>RELATIONAL SCHEMA DESIGN (chess.db)</span>
+              </div>
+              <span class="text-[11px] font-code text-gray-400">FOREIGN KEY (game_id) ON DELETE CASCADE</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1 font-code text-xs">
+              <!-- Table games -->
+              <div class="bg-chess-bg p-3.5 rounded-lg border border-chess-border/80 space-y-2">
+                <div class="text-white font-bold flex items-center justify-between">
+                  <span class="text-blue-400">TABLE games</span>
+                  <span class="text-[10px] text-gray-400">Match Metadata</span>
+                </div>
+                <div class="text-[11px] text-gray-300 space-y-1">
+                  <div><span class="text-chess-gold font-semibold">id</span> : INTEGER (PRIMARY KEY AUTOINCREMENT)</div>
+                  <div><span class="text-chess-gold">played_at</span> : DATETIME DEFAULT CURRENT_TIMESTAMP</div>
+                  <div><span class="text-chess-gold">result</span> : TEXT ('1-0', '0-1', '1/2-1/2')</div>
+                  <div><span class="text-chess-gold">total_moves</span> : INTEGER</div>
+                </div>
+              </div>
+
+              <!-- Table moves -->
+              <div class="bg-chess-bg p-3.5 rounded-lg border border-chess-border/80 space-y-2">
+                <div class="text-white font-bold flex items-center justify-between">
+                  <span class="text-green-400">TABLE moves</span>
+                  <span class="text-[10px] text-gray-400">Sequential Step Logs</span>
+                </div>
+                <div class="text-[11px] text-gray-300 space-y-1">
+                  <div><span class="text-chess-gold font-semibold">id</span> : INTEGER (PRIMARY KEY AUTOINCREMENT)</div>
+                  <div><span class="text-chess-gold">game_id</span> : INTEGER (FK -&gt; games.id)</div>
+                  <div><span class="text-chess-gold">move_index</span> : INTEGER</div>
+                  <div><span class="text-chess-gold">notation</span> : TEXT (e.g. 'Nf3', 'e5', 'O-O')</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Replay Execution Mechanics -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-chess-card border border-chess-border rounded-xl p-4 space-y-2">
+              <div class="text-purple-400 font-bold text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-file-code"></i>
+                <span data-lang-tr="Cebirsel Ayrıştırma" data-lang-en="Algebraic Parsing">Cebirsel Ayrıştırma</span>
+              </div>
+              <p class="text-xs text-gray-400 leading-relaxed" data-lang-tr="Veritabanındaki notasyon metni (ör. Nf3, exd5) ReplaySystem tarafından çözümlenerek kaynak ve hedef koordinatlarına dönüştürülür." data-lang-en="DB notation strings (e.g. Nf3, exd5) parsed back into source and target coordinates by ReplaySystem.">
+                Veritabanındaki notasyon metni (ör. Nf3, exd5) ReplaySystem tarafından çözümlenerek kaynak ve hedef koordinatlarına dönüştürülür.
+              </p>
+            </div>
+
+            <div class="bg-chess-card border border-chess-border rounded-xl p-4 space-y-2">
+              <div class="text-rose-400 font-bold text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-play"></i>
+                <span data-lang-tr="400ms İnterpolasyon" data-lang-en="400ms Interpolation">400ms İnterpolasyon</span>
+              </div>
+              <p class="text-xs text-gray-400 leading-relaxed" data-lang-tr="Otomatik oynatma modunda taşlar ışınlanmak yerine kareler arasında 400ms süreli akıcı bir kayma animasyonu ile ilerler." data-lang-en="During auto-play mode, pieces transition smoothly across board coordinates using a 400ms linear interpolation timer.">
+                Otomatik oynatma modunda taşlar ışınlanmak yerine kareler arasında 400ms süreli akıcı bir kayma animasyonu ile ilerler.
+              </p>
+            </div>
+
+            <div class="bg-chess-card border border-chess-border rounded-xl p-4 space-y-2">
+              <div class="text-emerald-400 font-bold text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-sliders"></i>
+                <span data-lang-tr="Adım Kontrolü" data-lang-en="Step Navigation">Adım Kontrolü</span>
+              </div>
+              <p class="text-xs text-gray-400 leading-relaxed" data-lang-tr="Kullanıcı Prev / Next butonlarıyla hamleleri tek tek ileri/geri alabilir veya Pause ile istediği anda durdurabilir." data-lang-en="Users can navigate moves step-by-step via Prev/Next controls or pause playback at any position.">
+                Kullanıcı Prev / Next butonlarıyla hamleleri tek tek ileri/geri alabilir veya Pause ile istediği anda durdurabilir.
+              </p>
+            </div>
+          </div>
+
+          <!-- Footer info -->
+          <div class="border-t border-chess-border/60 pt-4 flex items-center justify-between text-xs text-gray-400">
+            <span>Transaction-safe SQLite operations using JDBC</span>
+            <span class="font-code text-purple-400">DatabaseManager.java</span>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ==========================================
+           POSTER 5: UI/UX & DYNAMIC THEMES (TEMA VE UI)
+           ========================================== -->
+      <section id="poster-5" class="poster-card max-w-4xl mx-auto bg-chess-panel border border-chess-border rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:border-rose-500/50">
+        
+        <!-- Poster Header Bar -->
+        <div class="bg-chess-card/90 px-6 py-4 border-b border-chess-border flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center space-x-3">
+            <span class="px-2.5 py-1 rounded bg-rose-500/20 border border-rose-500/40 text-rose-400 font-code text-xs font-bold">SLIDE 05 / 05</span>
+            <span class="text-xs tracking-wider text-gray-400 font-semibold" data-lang-tr="UI/UX TASARIMI, TEMALAR & 60 FPS GAME LOOP" data-lang-en="UI/UX DESIGN, THEMES & 60 FPS GAME LOOP">UI/UX TASARIMI, TEMALAR & 60 FPS GAME LOOP</span>
+          </div>
+          <span class="text-xs font-code text-rose-400 font-semibold">Themes & Loop</span>
+        </div>
+
+        <!-- Poster Body Content -->
+        <div id="poster-5-content" class="p-6 sm:p-10 space-y-8 bg-gradient-to-b from-chess-panel via-[#1e1416] to-chess-panel">
+          
+          <!-- Header -->
+          <div class="space-y-2">
+            <div class="inline-block px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 font-code text-xs font-bold tracking-wider">
+              Retro Pixel Aesthetics & Smooth Rendering
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" data-lang-tr="5 Özelleştirilebilir Tema & Piksel Sanatı Estetiği" data-lang-en="5 Customizable Board Themes & Pixel Art Aesthetics">
+              5 Özelleştirilebilir Tema & Piksel Sanatı Estetiği
+            </h3>
+            <p class="text-gray-300 text-xs sm:text-sm max-w-2xl leading-relaxed" data-lang-tr="60 FPS kesintisiz döngü ile çalışan Java Swing arayüzü, 5 renk paleti seçeneği ve zengin kullanıcı bildirim göstergeleri." data-lang-en="Java Swing interface running on a 60 FPS game loop with 5 board color dynamic palettes and HUD notification panels.">
+              60 FPS kesintisiz döngü ile çalışan Java Swing arayüzü, 5 renk paleti seçeneği ve zengin kullanıcı bildirim göstergeleri.
+            </p>
+          </div>
+
+          <!-- 5 Theme Palettes Showcase -->
+          <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
+            <!-- Theme 1 -->
+            <div class="bg-chess-card border border-chess-border rounded-xl p-3 space-y-2 text-center">
+              <div class="text-xs font-bold text-white">Classic Wood</div>
+              <div class="flex h-10 rounded overflow-hidden border border-chess-border">
+                <div class="w-1/2 bg-[#D2A57D]"></div>
+                <div class="w-1/2 bg-[#AF7346]"></div>
+              </div>
+              <div class="text-[10px] text-gray-400 font-code">Standard FIDE</div>
+            </div>
+
+            <!-- Theme 2 -->
+            <div class="bg-chess-card border border-chess-border rounded-xl p-3 space-y-2 text-center">
+              <div class="text-xs font-bold text-white">Ocean Blue</div>
+              <div class="flex h-10 rounded overflow-hidden border border-chess-border">
+                <div class="w-1/2 bg-[#cbd5e1]"></div>
+                <div class="w-1/2 bg-[#1e40af]"></div>
+              </div>
+              <div class="text-[10px] text-gray-400 font-code">Cool Marine</div>
+            </div>
+
+            <!-- Theme 3 -->
+            <div class="bg-chess-card border border-chess-border rounded-xl p-3 space-y-2 text-center">
+              <div class="text-xs font-bold text-white">Forest Green</div>
+              <div class="flex h-10 rounded overflow-hidden border border-chess-border">
+                <div class="w-1/2 bg-[#e2e8f0]"></div>
+                <div class="w-1/2 bg-[#15803d]"></div>
+              </div>
+              <div class="text-[10px] text-gray-400 font-code">Tournament</div>
+            </div>
+
+            <!-- Theme 4 -->
+            <div class="bg-chess-card border border-chess-border rounded-xl p-3 space-y-2 text-center">
+              <div class="text-xs font-bold text-white">Desert Gold</div>
+              <div class="flex h-10 rounded overflow-hidden border border-chess-border">
+                <div class="w-1/2 bg-[#fef08a]"></div>
+                <div class="w-1/2 bg-[#b45309]"></div>
+              </div>
+              <div class="text-[10px] text-gray-400 font-code">Warm Sand</div>
+            </div>
+
+            <!-- Theme 5 -->
+            <div class="bg-chess-card border border-chess-border rounded-xl p-3 space-y-2 text-center">
+              <div class="text-xs font-bold text-white">Midnight Dark</div>
+              <div class="flex h-10 rounded overflow-hidden border border-chess-border">
+                <div class="w-1/2 bg-[#475569]"></div>
+                <div class="w-1/2 bg-[#0f172a]"></div>
+              </div>
+              <div class="text-[10px] text-gray-400 font-code">OLED Dark</div>
+            </div>
+          </div>
+
+          <!-- Game Loop Architecture & UI HUD Breakdown (Typography Cleaned for EN Capital I) -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <div class="bg-chess-card border border-chess-border rounded-xl p-5 space-y-3">
+              <div class="text-xs font-bold text-rose-400 font-code flex items-center gap-2">
+                <i class="fa-solid fa-clock"></i>
+                <span data-lang-tr="60 FPS Game Loop Mimarisi" data-lang-en="60 FPS Game Loop Architecture">60 FPS Game Loop Mimarisi</span>
+              </div>
+              <p class="text-xs text-gray-300 leading-relaxed" data-lang-tr="Java Runnable interface ile ayrı bir Thread üzerinde 1,000,000,000 / 60 nanosaniyelik hassas zamanlayıcı ile update() ve repaint() çağrıları gerçekleştirilir. Ekran yırtılması Double Buffering ile önlenir." data-lang-en="Driven on a dedicated thread with a 1,000,000,000 / 60 nanosecond precision frame timer executing continuous update() and repaint() cycles. Screen tearing prevented via Swing Double Buffering.">
+                Java Runnable interface ile ayrı bir Thread üzerinde 1,000,000,000 / 60 nanosaniyelik hassas zamanlayıcı ile update() ve repaint() çağrıları gerçekleştirilir. Ekran yırtılması Double Buffering ile önlenir.
+              </p>
+            </div>
+
+            <div class="bg-chess-card border border-chess-border rounded-xl p-5 space-y-3">
+              <div class="text-xs font-bold text-cyan-400 font-code flex items-center gap-2">
+                <i class="fa-solid fa-desktop"></i>
+                <span data-lang-tr="İnteraktif Yan Panel (HUD)" data-lang-en="Interactive HUD Side-Panel">İnteraktif Yan Panel (HUD)</span>
+              </div>
+              <p class="text-xs text-gray-300 leading-relaxed" data-lang-tr="Sağ tarafta sıradaki oyuncu göstergesi (Turn Indicator), canlı hamle geçmişi (Algebraic Log), aktif tema seçici dropdown ve Piyon Terfisi için açılan interaktif taş seçim modalı yer alır." data-lang-en="The HUD features an active turn indicator, live scrollable algebraic notation stream, dynamic theme selector, and interactive Pawn Promotion modal overlay.">
+                Sağ tarafta sıradaki oyuncu göstergesi (Turn Indicator), canlı hamle geçmişi (Algebraic Log), aktif tema seçici dropdown ve Piyon Terfisi için açılan interaktif taş seçim modalı yer alır.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Footer info -->
+          <div class="border-t border-chess-border/60 pt-4 flex items-center justify-between text-xs text-gray-400">
+            <span>Retro Pixel Styling & Custom Swing Drawing</span>
+            <span class="font-code text-rose-400">GamePanel.java</span>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+
+    <!-- ==========================================
+         INTERACTIVE GAMEPLAY, REPLAY & GITHUB HUB
+         ========================================== -->
+    <section id="simulator-section" class="bg-chess-panel border border-chess-border rounded-2xl p-6 md:p-8 space-y-6 no-print shadow-xl">
+      
+      <!-- Top Title & Mode Bar -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-chess-border pb-5">
+        <div>
+          <div class="inline-flex items-center gap-2 text-amber-400 text-xs font-semibold tracking-wider mb-1">
+            <i class="fa-solid fa-gamepad"></i>
+            <span data-lang-tr="Java Masaüstü Deneyimi & Canlı Simülatör" data-lang-en="Java Desktop Experience & Live Simulator">Java Masaüstü Deneyimi & Canlı Simülatör</span>
+          </div>
+          <h3 class="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+            <span data-lang-tr="Masaüstü Satranç Uygulamasını Deneyimleyin" data-lang-en="Experience the Desktop Chess Engine">Masaüstü Satranç Uygulamasını Deneyimleyin</span>
+          </h3>
+          <p class="text-xs text-gray-400 mt-1" data-lang-tr="Tarayıcınızda canlı oynayın, 400ms animasyonlu maç tekrarlarını izleyin veya GitHub'dan masaüstü Java uygulamasını indirin." data-lang-en="Play live in your browser, watch 400ms smooth animated match replays, or download the full Java desktop application from GitHub.">
+            Tarayıcınızda canlı oynayın, 400ms animasyonlu maç tekrarlarını izleyin veya GitHub'dan masaüstü Java uygulamasını indirin.
+          </p>
+        </div>
+
+        <!-- Mode Switcher Tabs -->
+        <div class="flex flex-wrap items-center gap-1.5 bg-chess-card border border-chess-border p-1 rounded-xl text-xs font-semibold">
+          <button id="mode-btn-play" onclick="switchSimMode('play')" class="px-3.5 py-1.5 rounded-lg bg-blue-600 text-white shadow flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-chess"></i>
+            <span data-lang-tr="İnteraktif Oyna" data-lang-en="Play Live">İnteraktif Oyna</span>
+          </button>
+          <button id="mode-btn-replay" onclick="switchSimMode('replay')" class="px-3.5 py-1.5 rounded-lg text-gray-400 hover:text-white flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-video"></i>
+            <span data-lang-tr="Replay Motoru" data-lang-en="Replay Engine">Replay Motoru</span>
+          </button>
+          <button id="mode-btn-db" onclick="switchSimMode('db')" class="px-3.5 py-1.5 rounded-lg text-gray-400 hover:text-white flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-database"></i>
+            <span data-lang-tr="SQLite Kayıtları" data-lang-en="SQLite Records">SQLite Kayıtları</span>
+          </button>
+          <a href="https://github.com/tunahanekelik/ChessGame" target="_blank" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-1.5 transition shadow">
+            <i class="fa-brands fa-github"></i>
+            <span data-lang-tr="GitHub'dan İndir" data-lang-en="Get from GitHub">GitHub'dan İndir</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Theme Selector Bar (Directly matching Theme.java from the project) -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-chess-bg/80 border border-chess-border p-3.5 rounded-xl text-xs">
+        <div class="flex items-center gap-2 text-gray-300 font-medium">
+          <i class="fa-solid fa-palette text-chess-gold"></i>
+          <span data-lang-tr="Tahta Teması (Theme.java):" data-lang-en="Board Theme (Theme.java):">Tahta Teması (Theme.java):</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2" id="theme-buttons-container">
+          <button onclick="setBoardTheme('Classic')" id="theme-btn-Classic" class="px-2.5 py-1 rounded-lg border border-amber-500/50 bg-amber-500/20 text-amber-300 font-code font-semibold flex items-center gap-1.5 transition">
+            <span class="w-3 h-3 rounded-full inline-block" style="background: linear-gradient(135deg, #D2A57D 50%, #AF7346 50%)"></span>
+            Classic
+          </button>
+          <button onclick="setBoardTheme('Ocean')" id="theme-btn-Ocean" class="px-2.5 py-1 rounded-lg border border-chess-border bg-chess-card text-gray-300 hover:text-white font-code flex items-center gap-1.5 transition">
+            <span class="w-3 h-3 rounded-full inline-block" style="background: linear-gradient(135deg, #C8D2B4 50%, #6496B4 50%)"></span>
+            Ocean
+          </button>
+          <button onclick="setBoardTheme('Forest')" id="theme-btn-Forest" class="px-2.5 py-1 rounded-lg border border-chess-border bg-chess-card text-gray-300 hover:text-white font-code flex items-center gap-1.5 transition">
+            <span class="w-3 h-3 rounded-full inline-block" style="background: linear-gradient(135deg, #C8D2B4 50%, #64A064 50%)"></span>
+            Forest
+          </button>
+          <button onclick="setBoardTheme('Desert')" id="theme-btn-Desert" class="px-2.5 py-1 rounded-lg border border-chess-border bg-chess-card text-gray-300 hover:text-white font-code flex items-center gap-1.5 transition">
+            <span class="w-3 h-3 rounded-full inline-block" style="background: linear-gradient(135deg, #E6D7B4 50%, #C8AA6E 50%)"></span>
+            Desert
+          </button>
+          <button onclick="setBoardTheme('Midnight')" id="theme-btn-Midnight" class="px-2.5 py-1 rounded-lg border border-chess-border bg-chess-card text-gray-300 hover:text-white font-code flex items-center gap-1.5 transition">
+            <span class="w-3 h-3 rounded-full inline-block" style="background: linear-gradient(135deg, #46465A 50%, #28283C 50%)"></span>
+            Midnight
+          </button>
+        </div>
+      </div>
+
+      <!-- MAIN SIMULATOR STAGE -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Board Container Column (Canvas + Floating Controls) -->
+        <div class="lg:col-span-6 flex flex-col items-center space-y-3">
+          
+          <!-- Turn Indicator Bar (Matching GamePanel.java UI) -->
+          <div class="w-full max-w-[380px] bg-chess-card border border-chess-border rounded-xl px-4 py-2 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-2">
+              <span id="turn-pawn-icon" class="text-base">♟</span>
+              <span id="turn-status-text" class="font-bold text-white">Sıra: Beyaz (White)</span>
+            </div>
+            <div id="game-eval-badge" class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-code font-semibold" data-lang-tr="Canlı Maç" data-lang-en="Live Match">
+              Canlı Maç
+            </div>
+          </div>
+
+          <!-- Canvas Board Wrapper -->
+          <div class="relative bg-chess-card border-4 border-chess-border p-2 rounded-2xl shadow-2xl">
+            <canvas id="chess-sim-canvas" width="360" height="360" class="rounded-lg cursor-pointer block"></canvas>
+            
+            <!-- Promotion Choice Modal (Hidden by default) -->
+            <div id="promo-modal" class="hidden absolute inset-0 bg-black/75 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center space-y-3 z-20">
+              <span class="text-xs font-bold text-amber-400" data-lang-tr="Piyon Terfisi (Seçin):" data-lang-en="Pawn Promotion (Select):">Piyon Terfisi (Seçin):</span>
+              <div class="flex gap-2">
+                <button onclick="choosePromotion('Q')" class="w-12 h-12 bg-chess-card hover:bg-chess-accent border border-chess-border text-2xl rounded-xl transition flex items-center justify-center">♕</button>
+                <button onclick="choosePromotion('R')" class="w-12 h-12 bg-chess-card hover:bg-chess-accent border border-chess-border text-2xl rounded-xl transition flex items-center justify-center">♖</button>
+                <button onclick="choosePromotion('B')" class="w-12 h-12 bg-chess-card hover:bg-chess-accent border border-chess-border text-2xl rounded-xl transition flex items-center justify-center">♗</button>
+                <button onclick="choosePromotion('N')" class="w-12 h-12 bg-chess-card hover:bg-chess-accent border border-chess-border text-2xl rounded-xl transition flex items-center justify-center">♘</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Board Bottom Quick Actions -->
+          <div class="flex items-center gap-2 font-code text-xs">
+            <button onclick="resetPlayBoard()" class="px-3 py-1.5 rounded-lg bg-chess-card hover:bg-chess-border border border-chess-border text-gray-300 hover:text-white flex items-center gap-1.5 transition">
+              <i class="fa-solid fa-rotate-left text-amber-400"></i>
+              <span data-lang-tr="Tahtayı Sıfırla" data-lang-en="Reset Board">Tahtayı Sıfırla</span>
+            </button>
+            <button onclick="undoPlayMove()" class="px-3 py-1.5 rounded-lg bg-chess-card hover:bg-chess-border border border-chess-border text-gray-300 hover:text-white flex items-center gap-1.5 transition">
+              <i class="fa-solid fa-arrow-rotate-left text-blue-400"></i>
+              <span data-lang-tr="Hamle Geri Al" data-lang-en="Undo Move">Hamle Geri Al</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sidebar Right Controls Column -->
+        <div class="lg:col-span-6 space-y-4">
+          
+          <!-- VIEW 1: PLAYABLE MODE SIDEBAR -->
+          <div id="sim-view-play" class="space-y-4">
+            <div class="bg-chess-card border border-chess-border rounded-xl p-4 space-y-2">
+              <div class="flex items-center justify-between text-xs text-gray-400 font-code">
+                <span data-lang-tr="OYUN BİLGİSİ & DURUM" data-lang-en="GAME INFO & STATUS">OYUN BİLGİSİ & DURUM</span>
+                <span id="play-move-count" class="text-blue-400 font-bold">Hamle 0</span>
+              </div>
+              <div id="play-status-msg" class="text-sm font-semibold text-chess-gold min-h-[36px] flex items-center">
+                Tahtadaki herhangi bir taşa tıklayarak geçerli hamleleri görebilir ve oynayabilirsiniz.
+              </div>
+            </div>
+
+            <!-- Live Move Log (SAN Notation) -->
+            <div class="bg-chess-bg border border-chess-border rounded-xl p-4 font-code text-xs space-y-2">
+              <div class="text-gray-400 font-bold border-b border-chess-border pb-1.5 flex justify-between items-center">
+                <span data-lang-tr="CANLI HAMLE GEÇMİŞİ (PGN LOG)" data-lang-en="LIVE MOVE HISTORY (PGN LOG)">CANLI HAMLE GEÇMİŞİ (PGN LOG)</span>
+                <span id="play-log-count" class="text-xs text-chess-accent">0 Hamle</span>
+              </div>
+              <div id="play-notation-list" class="space-y-1 h-36 overflow-y-auto pr-2 text-gray-400">
+                <div class="text-gray-500 italic">Henüz hamle yapılmadı. Başlamak için beyaz bir taş seçin...</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIEW 2: REPLAY MODE SIDEBAR (Hidden by default) -->
+          <div id="sim-view-replay" class="hidden space-y-4">
+            <!-- Preset Match Selector -->
+            <div class="bg-chess-card border border-chess-border rounded-xl p-4 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-code text-gray-400" data-lang-tr="REPLAY İÇİN MAÇ SEÇİN" data-lang-en="SELECT MATCH TO REPLAY">REPLAY İÇİN MAÇ SEÇİN</span>
+                <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-code text-[11px]" data-lang-tr="400ms Animasyon" data-lang-en="400ms Animation">400ms Animasyon</span>
+              </div>
+              <select id="replay-match-select" onchange="loadPresetMatch(this.value)" class="w-full bg-chess-bg border border-chess-border rounded-lg p-2 text-xs text-gray-200 font-medium focus:outline-none focus:border-chess-accent">
+                <option value="scholars">1. Scholar's Mate (Çoban Matı - 4 Hamle Şah Mat)</option>
+                <option value="morphy">2. Paul Morphy vs Duke (Opera Oyunu - Ünlü Mat)</option>
+                <option value="sicilian">3. Sicilian Defense (Sicilya Savunması - Modern)</option>
+              </select>
+            </div>
+
+            <!-- Replay Player Bar -->
+            <div class="bg-chess-card border border-chess-border rounded-xl p-4 space-y-3">
+              <div id="replay-step-desc" class="text-sm font-semibold text-chess-gold min-h-[36px] flex items-center">
+                Replay yükleniyor...
+              </div>
+              
+              <div class="w-full bg-chess-bg rounded-full h-2 overflow-hidden border border-chess-border">
+                <div id="replay-progress" class="bg-chess-accent h-full transition-all duration-300" style="width: 0%;"></div>
+              </div>
+
+              <!-- Controls -->
+              <div class="flex items-center justify-center space-x-2 pt-1 font-code text-xs">
+                <button onclick="replayFirst()" class="px-3 py-1.5 rounded bg-chess-bg hover:bg-chess-border text-gray-300 border border-chess-border transition" title="First Move">
+                  <i class="fa-solid fa-backward-fast"></i>
+                </button>
+                <button onclick="replayPrev()" class="px-3 py-1.5 rounded bg-chess-bg hover:bg-chess-border text-gray-300 border border-chess-border transition" title="Previous">
+                  <i class="fa-solid fa-step-backward"></i>
+                </button>
+                <button id="replay-play-btn" onclick="replayTogglePlay()" class="px-4 py-1.5 rounded bg-green-600 hover:bg-green-500 text-white font-bold transition shadow">
+                  <i class="fa-solid fa-play"></i> <span id="replay-play-text" data-lang-tr="Oynat" data-lang-en="Play">Oynat</span>
+                </button>
+                <button onclick="replayNext()" class="px-3 py-1.5 rounded bg-chess-bg hover:bg-chess-border text-gray-300 border border-chess-border transition" title="Next">
+                  <i class="fa-solid fa-step-forward"></i>
+                </button>
+                <button onclick="replayLast()" class="px-3 py-1.5 rounded bg-chess-bg hover:bg-chess-border text-gray-300 border border-chess-border transition" title="Last Move">
+                  <i class="fa-solid fa-forward-fast"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Replay Notation Log -->
+            <div class="bg-chess-bg border border-chess-border rounded-xl p-4 font-code text-xs space-y-2">
+              <div class="text-gray-400 font-bold border-b border-chess-border pb-1 flex justify-between">
+                <span>REPLAY PGN LOG</span>
+                <span id="replay-step-indicator" class="text-chess-accent">Step 0 / 4</span>
+              </div>
+              <div id="replay-notation-list" class="space-y-1 h-28 overflow-y-auto pr-2"></div>
+            </div>
+          </div>
+
+          <!-- VIEW 3: SQLITE DATABASE PAST GAMES TABLE (Hidden by default) -->
+          <div id="sim-view-db" class="hidden space-y-4">
+            <div class="bg-chess-card border border-chess-border rounded-xl p-4 space-y-2">
+              <div class="flex items-center justify-between text-xs text-gray-400 font-code">
+                <span data-lang-tr="SQLITE 3 'chess.db' VERİTABANI GÖRÜNÜMÜ" data-lang-en="SQLITE 3 'chess.db' DATABASE VIEW">SQLITE 3 'chess.db' VERİTABANI GÖRÜNÜMÜ</span>
+                <span class="text-purple-400 font-bold" data-lang-tr="games & moves Tabloları" data-lang-en="games & moves Tables">games & moves Tabloları</span>
+              </div>
+              <p class="text-xs text-gray-300" data-lang-tr="Aşağıdaki tablo, Java uygulamasındaki DatabaseManager.getRecentGames() metodunun ürettiği SQLite kayıtlarını simüle eder:" data-lang-en="The table below simulates SQLite records generated by DatabaseManager.getRecentGames() in the Java app:">
+                Aşağıdaki tablo, Java uygulamasındaki <code class="text-purple-400">DatabaseManager.getRecentGames()</code> metodunun ürettiği SQLite kayıtlarını simüle eder:
+              </p>
+            </div>
+
+            <!-- Mock SQLite Table -->
+            <div class="bg-chess-bg border border-chess-border rounded-xl overflow-hidden font-code text-xs">
+              <table class="w-full text-left">
+                <thead class="bg-chess-card text-gray-400 border-b border-chess-border text-[11px]">
+                  <tr>
+                    <th class="p-2.5">ID</th>
+                    <th class="p-2.5" data-lang-tr="Tarih" data-lang-en="Date">Tarih</th>
+                    <th class="p-2.5" data-lang-tr="Sonuç" data-lang-en="Result">Sonuç</th>
+                    <th class="p-2.5" data-lang-tr="Hamle" data-lang-en="Moves">Hamle</th>
+                    <th class="p-2.5 text-right" data-lang-tr="Eylem" data-lang-en="Action">Eylem</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-chess-border text-gray-300">
+                  <tr class="hover:bg-chess-card/50 transition">
+                    <td class="p-2.5 font-bold text-blue-400">#104</td>
+                    <td class="p-2.5 text-gray-400">2026-08-29 20:15</td>
+                    <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-green-500/20 text-green-400 font-bold">1-0 (Mat)</span></td>
+                    <td class="p-2.5">4 Hamle</td>
+                    <td class="p-2.5 text-right">
+                      <button onclick="loadAndPlayMatch('scholars')" class="px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-semibold transition" data-lang-tr="Replay Aç" data-lang-en="Open Replay">
+                        Replay Aç
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-chess-card/50 transition">
+                    <td class="p-2.5 font-bold text-blue-400">#103</td>
+                    <td class="p-2.5 text-gray-400">2026-08-29 19:40</td>
+                    <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-green-500/20 text-green-400 font-bold">1-0 (Mat)</span></td>
+                    <td class="p-2.5">17 Hamle</td>
+                    <td class="p-2.5 text-right">
+                      <button onclick="loadAndPlayMatch('morphy')" class="px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-semibold transition" data-lang-tr="Replay Aç" data-lang-en="Open Replay">
+                        Replay Aç
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-chess-card/50 transition">
+                    <td class="p-2.5 font-bold text-blue-400">#102</td>
+                    <td class="p-2.5 text-gray-400">2026-08-29 18:22</td>
+                    <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold">1/2-1/2 (Pat)</span></td>
+                    <td class="p-2.5">38 Hamle</td>
+                    <td class="p-2.5 text-right">
+                      <button onclick="loadAndPlayMatch('sicilian')" class="px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-semibold transition" data-lang-tr="Replay Aç" data-lang-en="Open Replay">
+                        Replay Aç
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- GITHUB REPOSITORY & DESKTOP RUN CARD (Prominent CTA) -->
+          <div class="bg-gradient-to-br from-chess-card via-chess-panel to-chess-card border-2 border-emerald-500/40 rounded-xl p-4 sm:p-5 space-y-4 shadow-lg">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-semibold">
+                  <i class="fa-brands fa-github"></i> Open Source Java App
+                </div>
+                <h4 class="text-sm sm:text-base font-bold text-white mt-1" data-lang-tr="Tam Sürümü Masaüstünüzde Çalıştırın!" data-lang-en="Run the Full Desktop App!">
+                  Tam Sürümü Masaüstünüzde Çalıştırın!
+                </h4>
+                <p class="text-xs text-gray-300 mt-0.5" data-lang-tr="Proje kaynak kodlarını GitHub'dan klonlayıp kendi bilgisayarınızda derleyebilir veya doğrudan çalıştırabilirsiniz." data-lang-en="Clone the source code from GitHub to build or run the Java application directly on your desktop.">
+                  Proje kaynak kodlarını GitHub'dan klonlayıp kendi bilgisayarınızda derleyebilir veya doğrudan çalıştırabilirsiniz.
+                </p>
+              </div>
+            </div>
+
+            <!-- Terminal Clone Box -->
+            <div class="bg-chess-bg border border-chess-border rounded-lg p-2.5 font-code text-xs text-gray-300 flex items-center justify-between">
+              <span class="truncate select-all text-emerald-400">git clone https://github.com/tunahanekelik/ChessGame.git</span>
+              <button onclick="copyCloneCmd()" class="px-2 py-1 bg-chess-card hover:bg-chess-border rounded text-gray-300 hover:text-white transition shrink-0 ml-2" title="Kopyala">
+                <i class="fa-regular fa-copy"></i>
+              </button>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <a href="https://github.com/tunahanekelik/ChessGame" target="_blank" class="flex-1 min-w-[140px] text-center px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition shadow flex items-center justify-center gap-2">
+                <i class="fa-brands fa-github text-sm"></i>
+                <span data-lang-tr="GitHub Reposuna Git" data-lang-en="View on GitHub">GitHub Reposuna Git</span>
+              </a>
+              <a href="https://github.com/tunahanekelik/ChessGame/archive/refs/heads/master.zip" class="px-3.5 py-2.5 rounded-lg bg-chess-card hover:bg-chess-border border border-chess-border text-gray-200 text-xs font-semibold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-download text-amber-400"></i>
+                <span data-lang-tr="ZIP İndir" data-lang-en="Download ZIP">ZIP İndir</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==========================================
+         CODE SNIPPET INSPECTOR SECTION (SPECIFIC CHESS RULES & ARCHITECTURE)
+         ========================================== -->
+    <section id="code-inspector-section" class="bg-chess-panel border border-chess-border rounded-2xl p-6 md:p-8 space-y-6 no-print shadow-xl">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-chess-border pb-4">
+        <div>
+          <div class="inline-flex items-center gap-2 text-blue-400 text-xs font-semibold tracking-wider mb-1">
+            <i class="fa-solid fa-code"></i>
+            <span data-lang-tr="Satranç Kuralları & Çekirdek Kod Mimarisi" data-lang-en="Chess Rules & Core Architecture">Satranç Kuralları & Çekirdek Kod Mimarisi</span>
+          </div>
+          <h3 class="text-xl md:text-2xl font-bold text-white" data-lang-tr="Önemli Satranç Kuralları & Java Uygulamaları" data-lang-en="Key Chess Rules & Java Implementations">
+            Önemli Satranç Kuralları & Java Uygulamaları
+          </h3>
+          <p class="text-xs text-gray-400 mt-1" data-lang-tr="Aşağıdaki sekmelerden taşların özel hareket kurallarını, şah mat matrisini ve veritabanı motorunu inceleyebilirsiniz." data-lang-en="Explore specific piece movement mechanics, checkmate detection algorithms, and database engines across the tabs below.">
+            Aşağıdaki sekmelerden taşların özel hareket kurallarını, şah mat matrisini ve veritabanı motorunu inceleyebilirsiniz.
+          </p>
+        </div>
+
+        <!-- Code Tab Switchers (Showing Rule Names with full language translation) -->
+        <div class="flex flex-wrap items-center gap-1.5 font-code text-xs">
+          <button id="code-btn-1" onclick="showCodeTab(1)" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-semibold transition shadow flex items-center gap-1.5">
+            <span>🏰</span> <span data-lang-tr="Rok & Şah Güvenliği" data-lang-en="Castling & King Safety">Rok & Şah Güvenliği</span>
+          </button>
+          <button id="code-btn-2" onclick="showCodeTab(2)" class="px-3 py-1.5 rounded-lg bg-chess-card text-gray-400 hover:text-white border border-chess-border transition flex items-center gap-1.5">
+            <span>♟️</span> <span data-lang-tr="Geçerken Alma (En Passant)" data-lang-en="En Passant (Pawn)">Geçerken Alma (En Passant)</span>
+          </button>
+          <button id="code-btn-3" onclick="showCodeTab(3)" class="px-3 py-1.5 rounded-lg bg-chess-card text-gray-400 hover:text-white border border-chess-border transition flex items-center gap-1.5">
+            <span>♞</span> <span data-lang-tr="Atın L Hareketi" data-lang-en="Knight's L-Movement">Atın L Hareketi</span>
+          </button>
+          <button id="code-btn-4" onclick="showCodeTab(4)" class="px-3 py-1.5 rounded-lg bg-chess-card text-gray-400 hover:text-white border border-chess-border transition flex items-center gap-1.5">
+            <span>👑</span> <span data-lang-tr="3 Kademeli Şah Mat & Pat" data-lang-en="3-Tier Checkmate Matrix">3 Kademeli Şah Mat & Pat</span>
+          </button>
+          <button id="code-btn-5" onclick="showCodeTab(5)" class="px-3 py-1.5 rounded-lg bg-chess-card text-gray-400 hover:text-white border border-chess-border transition flex items-center gap-1.5">
+            <span>🎬</span> <span data-lang-tr="400ms Replay Interpolasyonu" data-lang-en="400ms Replay Engine">400ms Replay Interpolasyonu</span>
+          </button>
+          <button id="code-btn-6" onclick="showCodeTab(6)" class="px-3 py-1.5 rounded-lg bg-chess-card text-gray-400 hover:text-white border border-chess-border transition flex items-center gap-1.5">
+            <span>💾</span> <span data-lang-tr="SQLite İlişkisel Kayıt" data-lang-en="SQLite Relational DB">SQLite İlişkisel Kayıt</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Code Content Containers -->
+      <div class="bg-chess-bg border border-chess-border rounded-xl p-4 sm:p-6 font-code text-xs overflow-x-auto text-gray-300 shadow-inner">
+        
+        <!-- TAB 1: CASTLING / ROK & KING SAFETY -->
+        <pre id="code-tab-1" class="space-y-1 leading-relaxed"><code class="text-blue-300">// =========================================================================
+// piece/King.java • ROK (CASTLING) & ŞAH GÜVENLİĞİ DOĞRULAMA MOTORU
+// =========================================================================
+public boolean canMove(int targetCol, int targetRow) {
+    if (isWithinBoard(targetCol, targetRow)) {
+        // 1. Standart 1 Kare Şah Hareketi (N-S-E-W ve 4 Çapraz Yön)
+        if (Math.abs(targetCol - preCol) + Math.abs(targetRow - preRow) == 1 ||
+            Math.abs(targetCol - preCol) * Math.abs(targetRow - preRow) == 1) {
+            if (isValidSquare(targetCol, targetRow)) return true;
+        }
+
+        // 2. ROK KURALI: Şah daha önce hiç oynamamış olmalıdır
+        if (moved == false) {
+            
+            // --- ŞAH KANADI KISA ROK (O-O) ---
+            if (targetCol == preCol + 2 && targetRow == preRow &&
+                pieceIsOnStraightLine(targetCol, targetRow) == false &&
+                GamePanel.isSquareAttacked(preCol, preRow, 1 - color) == false &&     // Şah aktif tehdit altında olamaz
+                GamePanel.isSquareAttacked(preCol + 1, preRow, 1 - color) == false) { // Şahın geçtiği kare tehdit altında olamaz
+                
+                // Hedef karenin boş olduğunu doğrula
+                boolean targetEmpty = true;
+                for (Piece piece : GamePanel.simPieces) {
+                    if (piece != this && piece.col == targetCol && piece.row == targetRow) {
+                        targetEmpty = false; break;
+                    }
+                }
+                if (!targetEmpty) return false;
+
+                // 3 kare sağdaki Kale'nin (Rook) oynamamış olduğunu doğrula
+                for (Piece piece : GamePanel.simPieces) {
+                    if (piece.col == preCol + 3 && piece.row == preRow && piece.moved == false) {
+                        GamePanel.castlingP = piece; // Kale taşını otomatik bağla
+                        return true;
+                    }
+                }
+            }
+
+            // --- VEZİR KANADI UZUN ROK (O-O-O) ---
+            if (targetCol == preCol - 2 && targetRow == preRow &&
+                pieceIsOnStraightLine(targetCol, targetRow) == false &&
+                GamePanel.isSquareAttacked(preCol, preRow, 1 - color) == false &&
+                GamePanel.isSquareAttacked(preCol - 1, preRow, 1 - color) == false) {
+                
+                Piece knight = null, rook = null;
+                for (Piece piece : GamePanel.simPieces) {
+                    if (piece.col == preCol - 3 && piece.row == targetRow) knight = piece;
+                    if (piece.col == preCol - 4 && piece.row == targetRow) rook = piece;
+                }
+                if (knight == null && rook != null && rook.moved == false) {
+                    GamePanel.castlingP = rook;
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}</code></pre>
+
+        <!-- TAB 2: EN PASSANT & PAWN MECHANICS -->
+        <pre id="code-tab-2" class="hidden space-y-1 leading-relaxed"><code class="text-amber-300">// =========================================================================
+// piece/Pawn.java • GEÇERKEN ALMA (EN PASSANT), 2 KARE SÜRÜŞ & ÇAPRAZ ALMA
+// =========================================================================
+public boolean canMove(int targetCol, int targetRow) {
+    if (isWithinBoard(targetCol, targetRow) && isSameSquare(targetCol, targetRow) == false) {
+        
+        // Renge göre dikey yön değeri: Beyaz yukarı (-1), Siyah aşağı (+1)
+        int moveValue = (color == GamePanel.WHITE) ? -1 : 1;
+        hittingP = getHittingP(targetCol, targetRow);
+
+        // 1. Düz 1 Kare İleri Sürüş (Önü boş olmalı)
+        if (targetCol == preCol && targetRow == preRow + moveValue && hittingP == null) {
+            return true;
+        }
+
+        // 2. İlk Hamlede 2 Kare Sürüş (Araya taş girmemiş ve hiç oynamamış olmalı)
+        if (targetCol == preCol && targetRow == preRow + moveValue * 2 &&
+            hittingP == null && moved == false &&
+            pieceIsOnStraightLine(targetCol, targetRow) == false) {
+            return true;
+        }
+
+        // 3. Standart Çapraz Taş Alma (Diyagonalde rakip taş olmalı)
+        if (Math.abs(targetCol - preCol) == 1 &&
+            targetRow == preRow + moveValue &&
+            hittingP != null && hittingP.color != color) {
+            return true;
+        }
+
+        // 4. --- EN PASSANT (GEÇERKEN ALMA) ---
+        // Yan karedeki rakip piyon bir önceki hamlede 2 kare zıplamışsa (twoStepped == true)
+        // piyon onun arkasındaki boş kareye geçerek onu ele geçirebilir
+        if (Math.abs(targetCol - preCol) == 1 && targetRow == preRow + moveValue) {
+            for (Piece piece : GamePanel.simPieces) {
+                if (piece.col == targetCol && piece.row == preRow && piece.twoStepped == true) {
+                    hittingP = piece; // Hedefin arkasında kalan piyonu vurulacak taş olarak ata
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}</code></pre>
+
+        <!-- TAB 3: KNIGHT L-MOVEMENT MATH -->
+        <pre id="code-tab-3" class="hidden space-y-1 leading-relaxed"><code class="text-green-300">// =========================================================================
+// piece/Knight.java • ATIN ENGELLERİ AŞMA & 'L' HAREKETİ GEOMETRİSİ
+// =========================================================================
+public boolean canMove(int targetCol, int targetRow) {
+    if (isWithinBoard(targetCol, targetRow)) {
+        
+        // Atın hareketi 1:2 veya 2:1 oranında 'L' şeklindedir.
+        // Sütun ve satır mutlak farklarının çarpımı tam olarak 2 olduğunda 'L' hareketi doğrulanır:
+        // (ΔCol = 1 ve ΔRow = 2 -> 1 * 2 = 2) veya (ΔCol = 2 ve ΔRow = 1 -> 2 * 1 = 2)
+        if (Math.abs(targetCol - preCol) * Math.abs(targetRow - preRow) == 2) {
+            if (isValidSquare(targetCol, targetRow)) {
+                // At diğer taşların üzerinden atlayabildiği için aradaki kareler taranmaz!
+                return true;
+            }
+        }
+    }
+    return false;
+}</code></pre>
+
+        <!-- TAB 4: 3-TIER CHECKMATE & STALEMATE MATRIX -->
+        <pre id="code-tab-4" class="hidden space-y-1 leading-relaxed"><code class="text-rose-300">// =========================================================================
+// main/ChessLogic.java • 3 KADEMELİ ŞAH MAT & PAT (STALEMATE) MATRİSİ
+// =========================================================================
+public boolean isCheckmate() {
+    Piece king = getKing(true);
+    
+    // 1. KADEME (Escape): Şah komşu güvenli bir kareye kaçabilir mi?
+    if (kingCanMove(king)) return false;
+
+    // 2. KADEME (Capture): Şahı doğrudan tehdit eden taş başka bir taşla alınabilir mi?
+    for (Piece piece : gp.simPieces) {
+        if (piece != king && piece.color != gp.currentColor &&
+            piece.canMove(gp.checkingP.col, gp.checkingP.row)) {
+            return false;
+        }
+    }
+
+    // 3. KADEME (Block): Tehdit hattı (ışın) araya başka bir taş girilerek bloke edilebilir mi?
+    int colDiff = Math.abs(gp.checkingP.col - king.col);
+    int rowDiff = Math.abs(gp.checkingP.row - king.row);
+
+    // Dikey saldırı hattı kontrolü
+    if (colDiff == 0) {
+        int start = Math.min(gp.checkingP.row, king.row) + 1;
+        int end = Math.max(gp.checkingP.row, king.row);
+        for (int r = start; r < end; r++) {
+            for (Piece piece : gp.simPieces) {
+                if (piece != king && piece.color != gp.currentColor &&
+                    piece.canMove(gp.checkingP.col, r)) return false;
+            }
+        }
+    }
+    // Yatay ve Çapraz ışın blokaj algoritmaları...
+
+    // 3 savunma kademesi de başarısızsa -> ŞAH MAT (CHECKMATE)!
+    return true;
+}</code></pre>
+
+        <!-- TAB 5: REPLAY SYSTEM & 400MS INTERPOLATION -->
+        <pre id="code-tab-5" class="hidden space-y-1 leading-relaxed"><code class="text-purple-300">// =========================================================================
+// main/ReplaySystem.java • 400MS AKICI TAŞ KAYDIRMA VE PGN AYRIŞTIRMA
+// =========================================================================
+public void applyReplayMoves(int targetCount) {
+    resetReplayBoard();
+    animLastNotation = null;
+
+    // Hedeflenen adıma kadar tüm hamleleri sanal tahta üzerinde işlet
+    for (int i = 0; i < targetCount && i < currentReplayMoves.size(); i++) {
+        String notation = currentReplayMoves.get(i);
+        animLastNotation = notation;
+        if (notation.equals("O-O") || notation.equals("O-O-O")) {
+            applyCastlingReplay(notation, i, replayPieces);
+        } else {
+            parseAndApplyMove(notation, replayPieces);
+        }
+    }
+
+    // Taşların pixel koordinatlarını tahta pozisyonuna senkronize et
+    for (Piece p : replayPieces) {
+        p.x = p.getX(p.col);
+        p.y = p.getY(p.row);
+    }
+    replayMoveIndex = targetCount;
+}</code></pre>
+
+        <!-- TAB 6: SQLITE RELATIONAL PERSISTENCE -->
+        <pre id="code-tab-6" class="hidden space-y-1 leading-relaxed"><code class="text-cyan-300">// =========================================================================
+// main/DatabaseManager.java • SQLITE İLİŞKİSEL 'chess.db' KAYIT MOTORU
+// =========================================================================
+public static void saveGame(String result, ArrayList&lt;String&gt; moveLog) {
+    if (conn == null) return;
+    try {
+        // 1. 'games' Tablosuna Genel Maç Bilgisini Ekle ve Otomatik ID'yi Al
+        PreparedStatement gameStmt = conn.prepareStatement(
+                "INSERT INTO games (result) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+        gameStmt.setString(1, result);
+        gameStmt.executeUpdate();
+
+        ResultSet rs = gameStmt.getGeneratedKeys();
+        int gameId = rs.next() ? rs.getInt(1) : -1;
+        rs.close();
+        gameStmt.close();
+
+        // 2. 'moves' Tablosuna Her Bir Hamleyi İlişkisel Olarak (FOREIGN KEY) Kaydet
+        PreparedStatement moveStmt = conn.prepareStatement(
+                "INSERT INTO moves (game_id, move_number, half, notation) VALUES (?, ?, ?, ?)");
+
+        for (int i = 0; i < moveLog.size(); i++) {
+            moveStmt.setInt(1, gameId);
+            moveStmt.setInt(2, (i / 2) + 1); // Hamle Numarası (1, 2, 3...)
+            moveStmt.setInt(3, i % 2);       // 0: Beyaz, 1: Siyah
+            moveStmt.setString(4, moveLog.get(i)); // Standart Notasyon (e4, Nf3, O-O...)
+            moveStmt.executeUpdate();
+        }
+        moveStmt.close();
+    } catch (SQLException e) { e.printStackTrace(); }
+}</code></pre>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-chess-border bg-chess-panel py-6 text-center text-xs text-gray-400 no-print">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        Java Desktop Chess Project © 2026 • <strong>Tunahan Ferramuz Ekelik</strong>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span>Software Project Development</span>
+        <span>•</span>
+        <span>Computer Engineering</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script for Language Toggle, Dynamic Post Text, PNG Downloader & Full Interactive Chess Engine -->
+  <script>
+    let currentLang = 'tr';
+    let currentMode = 'play'; // 'play', 'replay', 'db'
+
+    // Board Themes mapping directly from Theme.java in the project
+    const BOARD_THEMES = {
+      Classic:  { light: '#D2A57D', dark: '#AF7346', border: '#8b5a2b', name: 'Classic' },
+      Ocean:    { light: '#C8D2B4', dark: '#6496B4', border: '#4a7c9b', name: 'Ocean' },
+      Forest:   { light: '#C8D2B4', dark: '#64A064', border: '#4a824a', name: 'Forest' },
+      Desert:   { light: '#E6D7B4', dark: '#C8AA6E', border: '#a88c52', name: 'Desert' },
+      Midnight: { light: '#46465A', dark: '#28283C', border: '#1c1c28', name: 'Midnight' }
+    };
+
+    let activeTheme = 'Classic';
+
+    const postTexts = {
+      tr: `🚀 Nesne Yönelimli Programlama (OOP) ve Java Swing ile Geliştirdiğim Masaüstü Satranç Motoru! ♟️
+
+Bilgisayar Mühendisliği 3. sınıf "CEN302 Yazılım Projesi Geliştirme" dersim kapsamında tamamladığım kapsamlı masaüstü satranç projemi paylaşmaktan mutluluk duyuyorum.
+
+Bu projeye sevgili RyisNow'ın temel öğretici video serisinden ilham alarak başladım; ardından mimariyi tamamen monolitik yapıdan kurtararak modüler, sürdürülebilir ve veritabanı destekli bir motora dönüştürdüm.
+
+🎯 Öne Çıkan Özellikler ve Mimari Detaylar:
+
+🔹 1. Modüler OOP Mimarisi & Sorumlulukların Ayrıştırılması (SoC):
+• Monolitik UI/Mantık karmaşasını önlemek adına; kurallar ChessLogic, menü durumları MenuManager, tekrar oynatıcı ReplaySystem ve veri katmanı DatabaseManager olarak delegasyon prensibiyle ayrıştırıldı.
+• Polimorfik taş tasarımı: Tüm taşlar 'abstract Piece' sınıfından türer ve 'canMove()' metodunu kendi geometrik kurallarına göre override eder.
+
+🔹 2. Çift Durumlu Sanal Simülasyon (Speculative Execution):
+• Hamle anında tahta durumu 'simPieces' gölge listesinde simüle edilir. Oyuncunun kendi şahını tehlikeye atıp atmadığı kontrol edilir (Self-Check Prevention); kural dışıysa hamle anında geri sarılır (rollback).
+
+🔹 3. 3 Kademeli Şah Mat & Pat Tespit Matrisi:
+• Şah tehdit altına girdiğinde sistem sırasıyla: 
+   1) Şah'ın güvenli kareye kaçışı (Escape), 
+   2) Saldıran taşın ele geçirilmesi (Capture), 
+   3) Tehdit hattının bir başka taşla bloke edilmesini (Block) analiz eder. 
+Üçü de imkânsızsa Şah Mat; tehdit yokken geçerli hamle kalmamışsa Pat (Stalemate) tetiklenir.
+
+🔹 4. SQLite ile Kalıcı Kayıt & Animasyonlu Oyun Tekrarı (Replay):
+• Her maç ve her bir hamle 'chess.db' üzerinde ilişkisel (FOREIGN KEY & CASCADE) olarak saklanır.
+• "Past Games" arayüzü sayesinde geçmiş oyunlar adım adım incelenebilir veya 400ms akıcı interpolasyon animasyonuyla baştan sona yeniden izlenebilir.
+
+🔹 5. FIDE Mekanikleri & Görsel Özelleştirme:
+• Geçerken Alma (En Passant), Rok (Castling) ve interaktif Piyon Terfisi (Pawn Promotion UI).
+• Canlı cebirsel notasyon akışı (Algebraic Notation).
+• 5 farklı dinamik tahta teması: Classic, Ocean, Forest, Desert, Midnight.
+
+🔗 GitHub Reposu & Kaynak Kod: https://github.com/tunahanekelik/ChessGame
+
+Projenin detaylı görsel dökümantasyonunu ekteki 5 afişlik görsel kartlarında bulabilirsiniz. Geri bildirimleriniz ve önerileriniz benim için çok değerli! ☕
+
+#Java #OOP #SoftwareEngineering #ChessEngine #CleanCode #SQLite #Swing #GameDevelopment #ComputerEngineering #SoftwareArchitecture`,
+
+      en: `🚀 Object-Oriented Architecture & Dynamic Chess Engine in Java! ♟️
+
+I'm excited to share my desktop chess project, developed as the final project for the 3rd-year "CEN302 Software Project Development" course in Computer Engineering.
+
+Inspired initially by RyisNow's foundational tutorials, I refactored and scaled the architecture from a monolithic codebase into a decoupled, extensible, and persistent desktop chess application.
+
+🎯 Key Technical Highlights & Architecture:
+
+🔹 1. Modular OOP & Separation of Concerns (SoC):
+• Eliminated UI/Logic coupling by delegating responsibilities across ChessLogic, MenuManager, ReplaySystem, and DatabaseManager.
+• Polymorphic Piece Hierarchy: All pieces inherit from the abstract 'Piece' base class and polymorphically override 'canMove()' to enforce distinct geometric movement constraints.
+
+🔹 2. Dual-State Speculative Execution Engine:
+• Move evaluation executes speculatively on a shadow list ('simPieces'). If the move compromises the player's own King, the state is rejected and instantly rolled back via 'resetPosition()'.
+
+🔹 3. 3-Tier Checkmate & Stalemate Matrix:
+• When the King is threatened (isKingInCheck), ChessLogic evaluates 3 sequential defenses:
+   1) King escape to a safe square (Escape),
+   2) Capturing the threatening piece (Capture),
+   3) Intercepting/blocking the attack ray (Block).
+If all 3 fail ➔ Checkmate. If no legal moves exist without active check ➔ Stalemate.
+
+🔹 4. SQLite Relational Persistence & Replay Engine:
+• Matches and move logs are stored relationally in 'chess.db' using FOREIGN KEY & CASCADE constraints.
+• Past games can be replayed with step-by-step navigation (Prev/Next) or smoothly animated with 400ms square interpolation.
+
+🔹 5. Complete FIDE Mechanics & UI Customization:
+• En Passant, Castling (King & Queen-side), and in-panel interactive Pawn Promotion.
+• Live Algebraic Notation logging (e4, Nf3, O-O, etc.).
+• 5 Dynamic Board Themes: Classic, Ocean, Forest, Desert, Midnight.
+
+🔗 GitHub Repository & Source Code: https://github.com/tunahanekelik/ChessGame
+
+Check out the 5 slides attached for a detailed visual breakdown of the UI, rules matrix, database schema, and theme customization. Feedback is always welcome! ☕
+
+#Java #OOP #SoftwareEngineering #ChessEngine #CleanCode #SQLite #Swing #GameDevelopment #ComputerEngineering #SoftwareArchitecture`
+    };
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+
+      const btnTr = document.getElementById('btn-tr');
+      const btnEn = document.getElementById('btn-en');
+      if (lang === 'tr') {
+        btnTr.className = 'px-3 py-1 rounded text-xs font-semibold transition-all bg-chess-accent text-white shadow';
+        btnEn.className = 'px-3 py-1 rounded text-xs font-semibold text-gray-400 hover:text-white transition-all';
+      } else {
+        btnEn.className = 'px-3 py-1 rounded text-xs font-semibold transition-all bg-chess-accent text-white shadow';
+        btnTr.className = 'px-3 py-1 rounded text-xs font-semibold text-gray-400 hover:text-white transition-all';
+      }
+
+      document.querySelectorAll('[data-lang-tr]').forEach(el => {
+        const text = el.getAttribute(`data-lang-${lang}`);
+        if (text) el.innerText = text;
+      });
+
+      updateTurnUI();
+      updatePlayLogUI();
+      renderCurrentBoard();
+    }
+
+    function copyCloneCmd() {
+      navigator.clipboard.writeText('git clone https://github.com/tunahanekelik/ChessGame.git').then(() => {
+        alert(currentLang === 'tr' ? 'Terminal komutu kopyalandı! ✓' : 'Git clone command copied! ✓');
+      });
+    }
+
+    function showCodeTab(tabIndex) {
+      [1, 2, 3, 4, 5, 6].forEach(idx => {
+        const codeEl = document.getElementById(`code-tab-${idx}`);
+        const btnEl = document.getElementById(`code-btn-${idx}`);
+        if (!codeEl || !btnEl) return;
+        if (idx === tabIndex) {
+          codeEl.classList.remove('hidden');
+          btnEl.className = 'px-3 py-1.5 rounded-lg bg-blue-600 text-white font-semibold transition shadow flex items-center gap-1.5';
+        } else {
+          codeEl.classList.add('hidden');
+          btnEl.className = 'px-3 py-1.5 rounded-lg bg-chess-card text-gray-400 hover:text-white border border-chess-border transition flex items-center gap-1.5';
+        }
+      });
+    }
+
+    function downloadPosterAsPNG(containerId, filename) {
+      const element = document.getElementById(containerId);
+      if (!element) return;
+
+      const btn = event.currentTarget;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Hazırlanıyor...';
+      btn.disabled = true;
+
+      html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#1b1b1e',
+        logging: false
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = filename;
+        link.href = canvas.toDataURL('image/png', 1.0);
+        link.click();
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }).catch(err => {
+        console.error('PNG download failed:', err);
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      });
+    }
+
+    // ==========================================
+    // THEME MANAGEMENT (Theme.java Integration)
+    // ==========================================
+    function setBoardTheme(themeName) {
+      if (!BOARD_THEMES[themeName]) return;
+      activeTheme = themeName;
+
+      // Update button styling
+      ['Classic', 'Ocean', 'Forest', 'Desert', 'Midnight'].forEach(t => {
+        const btn = document.getElementById(`theme-btn-${t}`);
+        if (!btn) return;
+        if (t === themeName) {
+          btn.className = 'px-2.5 py-1 rounded-lg border border-amber-500/50 bg-amber-500/20 text-amber-300 font-code font-semibold flex items-center gap-1.5 transition';
+        } else {
+          btn.className = 'px-2.5 py-1 rounded-lg border border-chess-border bg-chess-card text-gray-300 hover:text-white font-code flex items-center gap-1.5 transition';
+        }
+      });
+
+      renderCurrentBoard();
+    }
+
+    // ==========================================
+    // MODE SWITCHER: PLAY vs REPLAY vs SQLITE
+    // ==========================================
+    function switchSimMode(mode) {
+      currentMode = mode;
+      replayPause();
+
+      const btnPlay = document.getElementById('mode-btn-play');
+      const btnReplay = document.getElementById('mode-btn-replay');
+      const btnDb = document.getElementById('mode-btn-db');
+
+      const viewPlay = document.getElementById('sim-view-play');
+      const viewReplay = document.getElementById('sim-view-replay');
+      const viewDb = document.getElementById('sim-view-db');
+
+      btnPlay.className = mode === 'play' ? 'px-3.5 py-1.5 rounded-lg bg-blue-600 text-white shadow flex items-center gap-1.5 transition' : 'px-3.5 py-1.5 rounded-lg text-gray-400 hover:text-white flex items-center gap-1.5 transition';
+      btnReplay.className = mode === 'replay' ? 'px-3.5 py-1.5 rounded-lg bg-blue-600 text-white shadow flex items-center gap-1.5 transition' : 'px-3.5 py-1.5 rounded-lg text-gray-400 hover:text-white flex items-center gap-1.5 transition';
+      btnDb.className = mode === 'db' ? 'px-3.5 py-1.5 rounded-lg bg-blue-600 text-white shadow flex items-center gap-1.5 transition' : 'px-3.5 py-1.5 rounded-lg text-gray-400 hover:text-white flex items-center gap-1.5 transition';
+
+      viewPlay.classList.toggle('hidden', mode !== 'play');
+      viewReplay.classList.toggle('hidden', mode !== 'replay');
+      viewDb.classList.toggle('hidden', mode !== 'db');
+
+      const badge = document.getElementById('game-eval-badge');
+      if (mode === 'play') {
+        badge.innerText = currentLang === 'tr' ? 'Canlı İnteraktif Maç' : 'Live Interactive';
+        badge.className = 'px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-code font-semibold';
+      } else if (mode === 'replay') {
+        badge.innerText = currentLang === 'tr' ? 'Replay Modu' : 'Replay Mode';
+        badge.className = 'px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-code font-semibold';
+      } else {
+        badge.innerText = currentLang === 'tr' ? 'SQLite Veritabanı' : 'SQLite DB View';
+        badge.className = 'px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 font-code font-semibold';
+      }
+
+      renderCurrentBoard();
+      updateTurnUI();
+    }
+
+    function loadAndPlayMatch(matchKey) {
+      document.getElementById('replay-match-select').value = matchKey;
+      switchSimMode('replay');
+      loadPresetMatch(matchKey);
+    }
+
+    // ==========================================
+    // INTERACTIVE PLAYABLE CHESS ENGINE (With Castling & En Passant)
+    // ==========================================
+    const pieceSymbols = {
+      'K': '♔', 'Q': '♕', 'R': '♖', 'B': '♗', 'N': '♘', 'P': '♙',
+      'k': '♚', 'q': '♛', 'r': '♜', 'b': '♝', 'n': '♞', 'p': '♟'
+    };
+
+    let playBoard = [
+      ['r','n','b','q','k','b','n','r'],
+      ['p','p','p','p','p','p','p','p'],
+      ['.','.','.','.','.','.','.','.'],
+      ['.','.','.','.','.','.','.','.'],
+      ['.','.','.','.','.','.','.','.'],
+      ['.','.','.','.','.','.','.','.'],
+      ['P','P','P','P','P','P','P','P'],
+      ['R','N','B','Q','K','B','N','R']
+    ];
+
+    let playTurn = 'W'; // 'W' = White, 'B' = Black
+    let selectedSquare = null; // { r, c }
+    let validDestinations = []; // array of { r, c }
+    let playMoveHistory = []; // array of { notation, from, to, piece, captured, boardSnap, movedPiecesSnap, enPassantSnap }
+    let pendingPromotion = null; // { from, to }
+    
+    // Castling and En Passant state
+    let movedPieces = {
+      'W_K': false,
+      'W_R_K': false,
+      'W_R_Q': false,
+      'B_K': false,
+      'B_R_K': false,
+      'B_R_Q': false
+    };
+    let enPassantTarget = null; // { r, c }
+
+    function resetPlayBoard() {
+      playBoard = [
+        ['r','n','b','q','k','b','n','r'],
+        ['p','p','p','p','p','p','p','p'],
+        ['.','.','.','.','.','.','.','.'],
+        ['.','.','.','.','.','.','.','.'],
+        ['.','.','.','.','.','.','.','.'],
+        ['.','.','.','.','.','.','.','.'],
+        ['P','P','P','P','P','P','P','P'],
+        ['R','N','B','Q','K','B','N','R']
+      ];
+      playTurn = 'W';
+      selectedSquare = null;
+      validDestinations = [];
+      playMoveHistory = [];
+      movedPieces = {
+        'W_K': false,
+        'W_R_K': false,
+        'W_R_Q': false,
+        'B_K': false,
+        'B_R_K': false,
+        'B_R_Q': false
+      };
+      enPassantTarget = null;
+      updatePlayLogUI();
+      renderCurrentBoard();
+      updateTurnUI();
+    }
+
+    function undoPlayMove() {
+      if (playMoveHistory.length === 0) return;
+      const last = playMoveHistory.pop();
+      playBoard = JSON.parse(JSON.stringify(last.boardSnap));
+      movedPieces = JSON.parse(JSON.stringify(last.movedPiecesSnap));
+      enPassantTarget = last.enPassantSnap ? JSON.parse(JSON.stringify(last.enPassantSnap)) : null;
+      playTurn = playTurn === 'W' ? 'B' : 'W';
+      selectedSquare = null;
+      validDestinations = [];
+      updatePlayLogUI();
+      renderCurrentBoard();
+      updateTurnUI();
+    }
+
+    function getPieceColor(p) {
+      if (p === '.') return null;
+      return p === p.toUpperCase() ? 'W' : 'B';
+    }
+
+    function computeLegalMoves(r, c) {
+      const p = playBoard[r][c];
+      if (p === '.') return [];
+      const color = getPieceColor(p);
+      const moves = [];
+      const type = p.toUpperCase();
+
+      // 1. PAWN MECHANICS (1-step, 2-step, diagonal capture & EN PASSANT)
+      if (type === 'P') {
+        const dir = color === 'W' ? -1 : 1;
+        const startRow = color === 'W' ? 6 : 1;
+
+        // 1 kare ileri sürüş
+        if (r + dir >= 0 && r + dir < 8 && playBoard[r + dir][c] === '.') {
+          moves.push({ r: r + dir, c: c });
+          // İlk hamlede 2 kare sürüş
+          if (r === startRow && playBoard[r + 2 * dir][c] === '.') {
+            moves.push({ r: r + 2 * dir, c: c });
+          }
+        }
+        // Standart çapraz taş alma
+        [-1, 1].forEach(dc => {
+          const nr = r + dir;
+          const nc = c + dc;
+          if (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) {
+            const target = playBoard[nr][nc];
+            if (target !== '.' && getPieceColor(target) !== color) {
+              moves.push({ r: nr, c: nc });
+            }
+          }
+        });
+
+        // EN PASSANT (Geçerken Alma)
+        if (enPassantTarget) {
+          const epRow = color === 'W' ? 3 : 4;
+          if (r === epRow) {
+            [-1, 1].forEach(dc => {
+              if (c + dc === enPassantTarget.c && r + dir === enPassantTarget.r) {
+                moves.push({ r: enPassantTarget.r, c: enPassantTarget.c, isEnPassant: true });
+              }
+            });
+          }
+        }
+      } 
+      // 2. KNIGHT (Atın L hareketi)
+      else if (type === 'N') {
+        const offsets = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
+        offsets.forEach(([dr, dc]) => {
+          const nr = r + dr, nc = c + dc;
+          if (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) {
+            const target = playBoard[nr][nc];
+            if (target === '.' || getPieceColor(target) !== color) moves.push({ r: nr, c: nc });
+          }
+        });
+      } 
+      // 3. BISHOP / ROOK / QUEEN
+      else if (type === 'B' || type === 'R' || type === 'Q') {
+        const dirs = [];
+        if (type === 'B' || type === 'Q') dirs.push([-1,-1],[-1,1],[1,-1],[1,1]);
+        if (type === 'R' || type === 'Q') dirs.push([-1,0],[1,0],[0,-1],[0,1]);
+
+        dirs.forEach(([dr, dc]) => {
+          let step = 1;
+          while (true) {
+            const nr = r + dr * step;
+            const nc = c + dc * step;
+            if (nr < 0 || nr >= 8 || nc < 0 || nc >= 8) break;
+            const target = playBoard[nr][nc];
+            if (target === '.') {
+              moves.push({ r: nr, c: nc });
+            } else {
+              if (getPieceColor(target) !== color) moves.push({ r: nr, c: nc });
+              break;
+            }
+            step++;
+          }
+        });
+      } 
+      // 4. KING (Şahın 1 kare hareketi ve ROK kuralları)
+      else if (type === 'K') {
+        const dirs = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+        dirs.forEach(([dr, dc]) => {
+          const nr = r + dr, nc = c + dc;
+          if (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) {
+            const target = playBoard[nr][nc];
+            if (target === '.' || getPieceColor(target) !== color) moves.push({ r: nr, c: nc });
+          }
+        });
+
+        // ROK (CASTLING) KONTROLLERİ
+        if (color === 'W' && !movedPieces['W_K'] && r === 7 && c === 4) {
+          // Beyaz Şah Kanadı Kısa Rok (O-O) -> g1 (7, 6)
+          if (!movedPieces['W_R_K'] && playBoard[7][5] === '.' && playBoard[7][6] === '.' && playBoard[7][7] === 'R') {
+            moves.push({ r: 7, c: 6, isCastling: true, castlingType: 'K' });
+          }
+          // Beyaz Vezir Kanadı Uzun Rok (O-O-O) -> c1 (7, 2)
+          if (!movedPieces['W_R_Q'] && playBoard[7][3] === '.' && playBoard[7][2] === '.' && playBoard[7][1] === '.' && playBoard[7][0] === 'R') {
+            moves.push({ r: 7, c: 2, isCastling: true, castlingType: 'Q' });
+          }
+        } else if (color === 'B' && !movedPieces['B_K'] && r === 0 && c === 4) {
+          // Siyah Şah Kanadı Kısa Rok (O-O) -> g8 (0, 6)
+          if (!movedPieces['B_R_K'] && playBoard[0][5] === '.' && playBoard[0][6] === '.' && playBoard[0][7] === 'r') {
+            moves.push({ r: 0, c: 6, isCastling: true, castlingType: 'K' });
+          }
+          // Siyah Vezir Kanadı Uzun Rok (O-O-O) -> c8 (0, 2)
+          if (!movedPieces['B_R_Q'] && playBoard[0][3] === '.' && playBoard[0][2] === '.' && playBoard[0][1] === '.' && playBoard[0][0] === 'r') {
+            moves.push({ r: 0, c: 2, isCastling: true, castlingType: 'Q' });
+          }
+        }
+      }
+
+      return moves;
+    }
+
+    function makeMove(from, to, promotionPiece = null) {
+      const snap = JSON.parse(JSON.stringify(playBoard));
+      const movedSnap = JSON.parse(JSON.stringify(movedPieces));
+      const epSnap = enPassantTarget ? JSON.parse(JSON.stringify(enPassantTarget)) : null;
+
+      const piece = playBoard[from.r][from.c];
+      const targetPiece = playBoard[to.r][to.c];
+      let isCapture = targetPiece !== '.';
+      const isPawn = piece.toUpperCase() === 'P';
+      const isKing = piece.toUpperCase() === 'K';
+
+      // Promotion check
+      const isPromoting = isPawn && ((getPieceColor(piece) === 'W' && to.r === 0) || (getPieceColor(piece) === 'B' && to.r === 7));
+      if (isPromoting && !promotionPiece) {
+        pendingPromotion = { from, to };
+        document.getElementById('promo-modal').classList.remove('hidden');
+        return;
+      }
+
+      let placedPiece = piece;
+      if (isPromoting && promotionPiece) {
+        placedPiece = getPieceColor(piece) === 'W' ? promotionPiece.toUpperCase() : promotionPiece.toLowerCase();
+      }
+
+      const files = ['a','b','c','d','e','f','g','h'];
+      const fromSquare = `${files[from.c]}${8 - from.r}`;
+      const toSquare = `${files[to.c]}${8 - to.r}`;
+      let notation = '';
+
+      // 1. ROK (CASTLING) İŞLEMLERİ
+      if (isKing && Math.abs(to.c - from.c) === 2) {
+        if (to.c === 6) { // Kısa Rok (O-O)
+          playBoard[to.r][6] = piece;
+          playBoard[to.r][4] = '.';
+          playBoard[to.r][5] = playBoard[to.r][7]; // Kaleyi f sütununa taşı
+          playBoard[to.r][7] = '.';
+          notation = 'O-O';
+        } else if (to.c === 2) { // Uzun Rok (O-O-O)
+          playBoard[to.r][2] = piece;
+          playBoard[to.r][4] = '.';
+          playBoard[to.r][3] = playBoard[to.r][0]; // Kaleyi d sütununa taşı
+          playBoard[to.r][0] = '.';
+          notation = 'O-O-O';
+        }
+      } 
+      // 2. EN PASSANT (GEÇERKEN ALMA) İŞLEMLERİ
+      else if (isPawn && enPassantTarget && to.r === enPassantTarget.r && to.c === enPassantTarget.c && targetPiece === '.') {
+        playBoard[to.r][to.c] = placedPiece;
+        playBoard[from.r][from.c] = '.';
+        playBoard[from.r][to.c] = '.'; // Arkada kalan piyonu tahtadan sil
+        isCapture = true;
+        notation = `${files[from.c]}x${toSquare} (e.p.)`;
+      } 
+      // 3. STANDART HAMLE İŞLEMİ
+      else {
+        playBoard[to.r][to.c] = placedPiece;
+        playBoard[from.r][from.c] = '.';
+
+        if (isPawn) {
+          notation = isCapture ? `${files[from.c]}x${toSquare}` : toSquare;
+          if (isPromoting) notation += `=${promotionPiece.toUpperCase()}`;
+        } else {
+          const pieceLetter = piece.toUpperCase() === 'N' ? 'N' : piece.toUpperCase();
+          notation = `${pieceLetter}${isCapture ? 'x' : ''}${toSquare}`;
+        }
+      }
+
+      // Update Moved Pieces tracking for Castling
+      if (from.r === 7 && from.c === 4) movedPieces['W_K'] = true;
+      if (from.r === 7 && from.c === 7) movedPieces['W_R_K'] = true;
+      if (from.r === 7 && from.c === 0) movedPieces['W_R_Q'] = true;
+      if (from.r === 0 && from.c === 4) movedPieces['B_K'] = true;
+      if (from.r === 0 && from.c === 7) movedPieces['B_R_K'] = true;
+      if (from.r === 0 && from.c === 0) movedPieces['B_R_Q'] = true;
+
+      // Update En Passant Target for the next turn
+      if (isPawn && Math.abs(to.r - from.r) === 2) {
+        enPassantTarget = { r: (from.r + to.r) / 2, c: from.c };
+      } else {
+        enPassantTarget = null;
+      }
+
+      playMoveHistory.push({
+        notation,
+        from,
+        to,
+        piece,
+        captured: targetPiece,
+        boardSnap: snap,
+        movedPiecesSnap: movedSnap,
+        enPassantSnap: epSnap
+      });
+
+      playTurn = playTurn === 'W' ? 'B' : 'W';
+      selectedSquare = null;
+      validDestinations = [];
+
+      updatePlayLogUI();
+      renderCurrentBoard();
+      updateTurnUI();
+    }
+
+    function choosePromotion(pieceType) {
+      document.getElementById('promo-modal').classList.add('hidden');
+      if (pendingPromotion) {
+        makeMove(pendingPromotion.from, pendingPromotion.to, pieceType);
+        pendingPromotion = null;
+      }
+    }
+
+    function updatePlayLogUI() {
+      const listEl = document.getElementById('play-notation-list');
+      const countEl = document.getElementById('play-move-count');
+      const logCountEl = document.getElementById('play-log-count');
+
+      const totalMoves = playMoveHistory.length;
+      countEl.innerText = currentLang === 'tr' ? `Hamle ${totalMoves}` : `Move ${totalMoves}`;
+      logCountEl.innerText = currentLang === 'tr' ? `${totalMoves} Hamle` : `${totalMoves} Moves`;
+
+      if (totalMoves === 0) {
+        listEl.innerHTML = `<div class="text-gray-500 italic">${currentLang === 'tr' ? 'Henüz hamle yapılmadı. Başlamak için beyaz bir taş seçin...' : 'No moves played yet. Click a white piece to begin...'}</div>`;
+        return;
+      }
+
+      let html = '';
+      for (let i = 0; i < totalMoves; i += 2) {
+        const moveNum = Math.floor(i / 2) + 1;
+        const whiteMove = playMoveHistory[i].notation;
+        const blackMove = (i + 1 < totalMoves) ? playMoveHistory[i + 1].notation : '';
+        html += `<div class="flex justify-between items-center py-0.5 border-b border-chess-border/50 hover:bg-chess-card px-1 rounded">
+          <span class="text-gray-500 w-8">${moveNum}.</span>
+          <span class="text-gray-200 font-semibold flex-1">${whiteMove}</span>
+          <span class="text-gray-400 flex-1 text-right">${blackMove}</span>
+        </div>`;
+      }
+      listEl.innerHTML = html;
+      listEl.scrollTop = listEl.scrollHeight;
+    }
+
+    function updateTurnUI() {
+      const pawnIcon = document.getElementById('turn-pawn-icon');
+      const turnText = document.getElementById('turn-status-text');
+      const statusMsg = document.getElementById('play-status-msg');
+
+      if (currentMode === 'play') {
+        if (playTurn === 'W') {
+          pawnIcon.innerText = '♙';
+          pawnIcon.className = 'text-base text-white';
+          turnText.innerText = currentLang === 'tr' ? 'Sıra: Beyaz (White)' : 'Turn: White';
+          statusMsg.innerText = currentLang === 'tr' ? 'Beyaz hamle yapabilir. Bir taş seçip hedef kareye tıklayın.' : 'White to move. Click a piece to view valid squares.';
+        } else {
+          pawnIcon.innerText = '♟';
+          pawnIcon.className = 'text-base text-chess-gold';
+          turnText.innerText = currentLang === 'tr' ? 'Sıra: Siyah (Black)' : 'Turn: Black';
+          statusMsg.innerText = currentLang === 'tr' ? 'Siyah hamle yapabilir. Bir taş seçip hedef kareye tıklayın.' : 'Black to move. Click a piece to view valid squares.';
+        }
+      } else if (currentMode === 'replay') {
+        pawnIcon.innerText = '🎬';
+        turnText.innerText = currentLang === 'tr' ? 'Replay Oynatılıyor' : 'Replaying Match';
+      } else {
+        pawnIcon.innerText = '💾';
+        turnText.innerText = currentLang === 'tr' ? 'SQLite Veritabanı' : 'SQLite Database';
+      }
+    }
+
+    // ==========================================
+    // PRESET REPLAY SYSTEM (ReplaySystem.java)
+    // ==========================================
+    const presetMatches = {
+      scholars: {
+        titleTr: "Scholar's Mate (Çoban Matı)",
+        titleEn: "Scholar's Mate",
+        moves: [
+          { notation: '1. e4 e5', descTr: '1. e4 (Beyaz Piyon) - 1... e5 (Siyah Piyon)', descEn: '1. e4 (White Pawn) - 1... e5 (Black Pawn)', board: [
+            ['r','n','b','q','k','b','n','r'],['p','p','p','p','.','p','p','p'],['.','.','.','.','.','.','.','.'],['.','.','.','.','p','.','.','.'],
+            ['.','.','.','.','P','.','.','.'],['.','.','.','.','.','.','.','.'],['P','P','P','P','.','P','P','P'],['R','N','B','Q','K','B','N','R']
+          ]},
+          { notation: '2. Qh5 Nc6', descTr: '2. Qh5 (Beyaz Vezir Tehdidi) - 2... Nc6 (Siyah At Savunması)', descEn: '2. Qh5 (White Queen Threat) - 2... Nc6 (Black Knight)', board: [
+            ['r','.','b','q','k','b','n','r'],['p','p','p','p','.','p','p','p'],['.','.','n','.','.','.','.','.'],['.','.','.','.','p','.','.','Q'],
+            ['.','.','.','.','P','.','.','.'],['.','.','.','.','.','.','.','.'],['P','P','P','P','.','P','P','P'],['R','N','B','.','K','B','N','R']
+          ]},
+          { notation: '3. Bc4 Nf6??', descTr: '3. Bc4 (Fil f7 Noktasına Bakar) - 3... Nf6?? (Hatalı Hamle)', descEn: '3. Bc4 (Bishop targets f7) - 3... Nf6?? (Blunder)', board: [
+            ['r','.','b','q','k','b','.','r'],['p','p','p','p','.','p','p','p'],['.','.','n','.','.','n','.','.'],['.','.','.','.','p','.','.','Q'],
+            ['.','.','B','.','P','.','.','.'],['.','.','.','.','.','.','.','.'],['P','P','P','P','.','P','P','P'],['R','N','B','.','K','.','N','R']
+          ]},
+          { notation: '4. Qxf7# (1-0)', descTr: '4. Qxf7# (Vezir f7 Piyonunu Alır -> ŞAH MAT!)', descEn: '4. Qxf7# (Queen captures f7 pawn -> CHECKMATE!)', board: [
+            ['r','.','b','q','k','b','.','r'],['p','p','p','p','.','Q','p','p'],['.','.','n','.','.','n','.','.'],['.','.','.','.','p','.','.','.'],
+            ['.','.','B','.','P','.','.','.'],['.','.','.','.','P','.','.','.'],['P','P','P','P','.','P','P','P'],['R','N','B','.','K','.','N','R']
+          ]}
+        ]
+      },
+      morphy: {
+        titleTr: "Paul Morphy vs Duke (Opera Oyunu)",
+        titleEn: "Paul Morphy's Opera Game",
+        moves: [
+          { notation: '1. e4 e5', descTr: '1. e4 e5 (Açık Oyun Başlangıcı)', descEn: '1. e4 e5 (Open Game Start)', board: [
+            ['r','n','b','q','k','b','n','r'],['p','p','p','p','.','p','p','p'],['.','.','.','.','.','.','.','.'],['.','.','.','.','p','.','.','.'],
+            ['.','.','.','.','P','.','.','.'],['.','.','.','.','.','.','.','.'],['P','P','P','P','.','P','P','P'],['R','N','B','Q','K','B','N','R']
+          ]},
+          { notation: '2. Nf3 d6', descTr: '2. Nf3 (At Gelişimi) - 2... d6 (Philidor Savunması)', descEn: '2. Nf3 - 2... d6 (Philidor Defense)', board: [
+            ['r','n','b','q','k','b','n','r'],['p','p','p','.','.','p','p','p'],['.','.','.','p','.','.','.','.'],['.','.','.','.','p','.','.','.'],
+            ['.','.','.','.','P','.','.','.'],['.','.','.','.','.','N','.','.'],['P','P','P','P','.','P','P','P'],['R','N','B','Q','K','B','.','R']
+          ]},
+          { notation: '3. d4 Bg4', descTr: '3. d4 (Merkez Baskısı) - 3... Bg4 (Fil Açmazı)', descEn: '3. d4 - 3... Bg4 (Pinning Knight)', board: [
+            ['r','n','.','q','k','b','n','r'],['p','p','p','.','.','p','p','p'],['.','.','.','p','.','.','.','.'],['.','.','.','.','p','.','.','.'],
+            ['.','.','.','P','P','.','.','b'],['.','.','.','.','.','N','.','.'],['P','P','P','.','.','P','P','P'],['R','N','B','Q','K','B','.','R']
+          ]},
+          { notation: '4. dxe5 Bxf3', descTr: '4. dxe5 (Piyon Değişimi) - 4... Bxf3 (Fil Atı Alır)', descEn: '4. dxe5 - 4... Bxf3 (Trade on f3)', board: [
+            ['r','n','.','q','k','b','n','r'],['p','p','p','.','.','p','p','p'],['.','.','.','p','.','.','.','.'],['.','.','.','.','P','.','.','.'],
+            ['.','.','.','.','.','.','.','.'],['.','.','.','.','.','b','.','.'],['P','P','P','.','.','P','P','P'],['R','N','B','Q','K','B','.','R']
+          ]},
+          { notation: '5. Qxf3 dxe5', descTr: '5. Qxf3 (Vezir Alışı) - 5... dxe5', descEn: '5. Qxf3 - 5... dxe5', board: [
+            ['r','n','.','q','k','b','n','r'],['p','p','p','.','.','p','p','p'],['.','.','.','.','.','.','.','.'],['.','.','.','.','p','.','.','.'],
+            ['.','.','.','.','.','.','.','.'],['.','.','.','.','.','Q','.','.'],['P','P','P','.','.','P','P','P'],['R','N','B','.','K','B','.','R']
+          ]}
+        ]
+      },
+      sicilian: {
+        titleTr: "Sicilian Defense (Sicilya Savunması)",
+        titleEn: "Sicilian Defense",
+        moves: [
+          { notation: '1. e4 c5', descTr: '1. e4 (Beyaz Piyon) - 1... c5 (Sicilya Yanıtı)', descEn: '1. e4 - 1... c5 (Sicilian Response)', board: [
+            ['r','n','b','q','k','b','n','r'],['p','p','.','p','p','p','p','p'],['.','.','.','.','.','.','.','.'],['.','.','p','.','.','.','.','.'],
+            ['.','.','.','.','P','.','.','.'],['.','.','.','.','.','.','.','.'],['P','P','P','P','.','P','P','P'],['R','N','B','Q','K','B','N','R']
+          ]},
+          { notation: '2. Nf3 d6', descTr: '2. Nf3 (At Çıkışı) - 2... d6 (Klasik Varyant)', descEn: '2. Nf3 - 2... d6 (Classical Variation)', board: [
+            ['r','n','b','q','k','b','n','r'],['p','p','.','.','p','p','p','p'],['.','.','.','p','.','.','.','.'],['.','.','p','.','.','.','.','.'],
+            ['.','.','.','.','P','.','.','.'],['.','.','.','.','.','N','.','.'],['P','P','P','P','.','P','P','P'],['R','N','B','Q','K','B','.','R']
+          ]},
+          { notation: '3. d4 cxd4', descTr: '3. d4 (Merkeze Vuruş) - 3... cxd4 (Piyon Kırışı)', descEn: '3. d4 - 3... cxd4 (Pawn Capture)', board: [
+            ['r','n','b','q','k','b','n','r'],['p','p','.','.','p','p','p','p'],['.','.','.','p','.','.','.','.'],['.','.','.','.','.','.','.','.'],
+            ['.','.','.','p','P','.','.','.'],['.','.','.','.','.','N','.','.'],['P','P','P','.','.','P','P','P'],['R','N','B','Q','K','B','.','R']
+          ]},
+          { notation: '4. Nxd4 Nf6', descTr: '4. Nxd4 (At Alışı) - 4... Nf6 (At Gelişimi)', descEn: '4. Nxd4 - 4... Nf6 (Knight Develops)', board: [
+            ['r','n','b','q','k','b','.','r'],['p','p','.','.','p','p','p','p'],['.','.','.','p','.','n','.','.'],['.','.','.','.','.','.','.','.'],
+            ['.','.','.','N','.','.','.','.'],['.','.','.','.','.','.','.','.'],['P','P','P','.','.','P','P','P'],['R','N','B','Q','K','B','.','R']
+          ]}
+        ]
+      }
+    };
+
+    let activeReplayKey = 'scholars';
+    let replayStep = 0;
+    let isReplayPlaying = false;
+    let replayTimer = null;
+
+    function loadPresetMatch(matchKey) {
+      replayPause();
+      activeReplayKey = matchKey;
+      replayStep = 0;
+      updateReplayUI();
+      renderCurrentBoard();
+    }
+
+    function updateReplayUI() {
+      const match = presetMatches[activeReplayKey];
+      const totalSteps = match.moves.length;
+
+      document.getElementById('replay-step-indicator').innerText = `Step ${replayStep} / ${totalSteps}`;
+      document.getElementById('replay-progress').style.width = `${(replayStep / totalSteps) * 100}%`;
+
+      const descEl = document.getElementById('replay-step-desc');
+      if (replayStep === 0) {
+        descEl.innerText = currentLang === 'tr' ? `${match.titleTr} - Başlangıç Dizilimi (Oynata Basın)` : `${match.titleEn} - Initial Setup`;
+      } else {
+        const move = match.moves[replayStep - 1];
+        descEl.innerText = currentLang === 'tr' ? move.descTr : move.descEn;
+      }
+
+      // Populate Replay Move Log
+      const logList = document.getElementById('replay-notation-list');
+      let html = '';
+      match.moves.forEach((m, idx) => {
+        const isCurrent = (idx + 1) === replayStep;
+        html += `<div class="p-1 rounded flex justify-between items-center ${isCurrent ? 'bg-chess-card text-chess-gold font-bold border border-chess-gold/40' : 'text-gray-400'}">
+          <span>${m.notation}</span>
+          <span class="text-[10px] text-gray-500">${isCurrent ? '● Aktif' : ''}</span>
+        </div>`;
+      });
+      logList.innerHTML = html;
+    }
+
+    function replayNext() {
+      const match = presetMatches[activeReplayKey];
+      if (replayStep < match.moves.length) {
+        replayStep++;
+        updateReplayUI();
+        renderCurrentBoard();
+      } else {
+        replayPause();
+      }
+    }
+
+    function replayPrev() {
+      if (replayStep > 0) {
+        replayStep--;
+        updateReplayUI();
+        renderCurrentBoard();
+      }
+    }
+
+    function replayFirst() {
+      replayPause();
+      replayStep = 0;
+      updateReplayUI();
+      renderCurrentBoard();
+    }
+
+    function replayLast() {
+      replayPause();
+      replayStep = presetMatches[activeReplayKey].moves.length;
+      updateReplayUI();
+      renderCurrentBoard();
+    }
+
+    function replayTogglePlay() {
+      if (isReplayPlaying) {
+        replayPause();
+      } else {
+        const match = presetMatches[activeReplayKey];
+        if (replayStep >= match.moves.length) replayStep = 0;
+        isReplayPlaying = true;
+        document.getElementById('replay-play-btn').className = 'px-4 py-1.5 rounded bg-amber-600 hover:bg-amber-500 text-white font-bold transition shadow';
+        document.getElementById('replay-play-text').innerText = currentLang === 'tr' ? 'Durdur' : 'Pause';
+        
+        replayTimer = setInterval(() => {
+          if (replayStep < match.moves.length) {
+            replayNext();
+          } else {
+            replayPause();
+          }
+        }, 1200);
+      }
+    }
+
+    function replayPause() {
+      isReplayPlaying = false;
+      if (replayTimer) clearInterval(replayTimer);
+      const playBtn = document.getElementById('replay-play-btn');
+      if (playBtn) playBtn.className = 'px-4 py-1.5 rounded bg-green-600 hover:bg-green-500 text-white font-bold transition shadow';
+      const playText = document.getElementById('replay-play-text');
+      if (playText) playText.innerText = currentLang === 'tr' ? 'Oynat' : 'Play';
+    }
+
+    // ==========================================
+    // CANVAS RENDERING ENGINE
+    // ==========================================
+    function renderCurrentBoard() {
+      const canvas = document.getElementById('chess-sim-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const size = 360;
+      const tileSize = size / 8;
+
+      let boardData;
+      if (currentMode === 'play') {
+        boardData = playBoard;
+      } else {
+        const match = presetMatches[activeReplayKey];
+        boardData = (replayStep === 0) ? playBoard : match.moves[replayStep - 1].board;
+      }
+
+      const theme = BOARD_THEMES[activeTheme] || BOARD_THEMES.Classic;
+
+      // Draw squares
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const isLight = (r + c) % 2 === 0;
+          ctx.fillStyle = isLight ? theme.light : theme.dark;
+          ctx.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);
+
+          // Highlight selected square
+          if (currentMode === 'play' && selectedSquare && selectedSquare.r === r && selectedSquare.c === c) {
+            ctx.fillStyle = 'rgba(234, 179, 8, 0.45)';
+            ctx.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);
+          }
+
+          // Highlight valid destination circles
+          if (currentMode === 'play' && validDestinations.some(d => d.r === r && d.c === c)) {
+            const hasPiece = boardData[r][c] !== '.';
+            ctx.fillStyle = hasPiece ? 'rgba(239, 68, 68, 0.55)' : 'rgba(34, 197, 94, 0.55)';
+            ctx.beginPath();
+            const radius = hasPiece ? tileSize / 2.2 : tileSize / 6;
+            ctx.arc(c * tileSize + tileSize / 2, r * tileSize + tileSize / 2, radius, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // Draw Chess Pieces
+          const piece = boardData[r][c];
+          if (piece !== '.') {
+            ctx.font = 'bold 30px "Inter", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            const isWhitePiece = piece === piece.toUpperCase();
+            
+            // Drop shadow for crisp contrast
+            ctx.shadowColor = 'rgba(0,0,0,0.6)';
+            ctx.shadowBlur = 4;
+            ctx.shadowOffsetX = 1;
+            ctx.shadowOffsetY = 2;
+
+            ctx.fillStyle = isWhitePiece ? '#FFFFFF' : '#141416';
+            ctx.fillText(pieceSymbols[piece] || piece, c * tileSize + tileSize / 2, r * tileSize + tileSize / 2 + 1);
+
+            // Reset shadow
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+          }
+        }
+      }
+
+      // Draw rank and file coordinates along the edges
+      ctx.font = '9px "Fira Code", monospace';
+      const files = ['a','b','c','d','e','f','g','h'];
+      for (let i = 0; i < 8; i++) {
+        // Files on bottom row
+        const isLightBottom = (7 + i) % 2 === 0;
+        ctx.fillStyle = isLightBottom ? theme.dark : theme.light;
+        ctx.fillText(files[i], i * tileSize + tileSize - 8, size - 4);
+
+        // Ranks on left column
+        const isLightLeft = i % 2 === 0;
+        ctx.fillStyle = isLightLeft ? theme.dark : theme.light;
+        ctx.fillText(`${8 - i}`, 4, i * tileSize + 10);
+      }
+    }
+
+    // ==========================================
+    // CANVAS CLICK INTERACTION HANDLER
+    // ==========================================
+    function setupCanvasClickListener() {
+      const canvas = document.getElementById('chess-sim-canvas');
+      if (!canvas) return;
+
+      canvas.addEventListener('click', (e) => {
+        if (currentMode !== 'play') return;
+
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+
+        const clickX = (e.clientX - rect.left) * scaleX;
+        const clickY = (e.clientY - rect.top) * scaleY;
+
+        const tileSize = 360 / 8;
+        const c = Math.floor(clickX / tileSize);
+        const r = Math.floor(clickY / tileSize);
+
+        if (r < 0 || r >= 8 || c < 0 || c >= 8) return;
+
+        // If a destination square is clicked
+        if (selectedSquare) {
+          const isDest = validDestinations.some(d => d.r === r && d.c === c);
+          if (isDest) {
+            makeMove(selectedSquare, { r, c });
+            return;
+          }
+        }
+
+        // If selecting a piece of the current turn
+        const piece = playBoard[r][c];
+        if (piece !== '.' && getPieceColor(piece) === playTurn) {
+          selectedSquare = { r, c };
+          validDestinations = computeLegalMoves(r, c);
+          renderCurrentBoard();
+        } else {
+          selectedSquare = null;
+          validDestinations = [];
+          renderCurrentBoard();
+        }
+      });
+    }
+
+    // Initialize all components on DOM ready
+    window.addEventListener('DOMContentLoaded', () => {
+      setLanguage('tr');
+      setupCanvasClickListener();
+      resetPlayBoard();
+      loadPresetMatch('scholars');
+      renderCurrentBoard();
+    });
+  </script>
+</body>
+</html>
